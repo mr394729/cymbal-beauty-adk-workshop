@@ -1,0 +1,16 @@
+{
+  "name": "cymbal_store_ops",
+  "description": "Cymbal Beauty store operations assistant for store managers and associates: start-of-day priorities, on-shelf availability, BOPIS coverage, shrink patterns, coaching summaries and store tasks with confirmation. The caller names the employee it acts for with a demo id such as U-M014.",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {"url": "http://localhost:8002/a2a/cymbal_store_ops", "protocolBinding": "JSONRPC", "protocolVersion": "1.0"}
+  ],
+  "capabilities": {"streaming": false, "pushNotifications": false},
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "skills": [
+    {"id": "on_shelf_availability", "name": "On-shelf availability", "description": "Explains why a product is flagged at a store (on-shelf, backroom, on-hand, BOPIS demand) and recommends a backroom check, replenishment, cycle count or escalation.", "tags": ["inventory", "osa"], "examples": ["I'm U-M014. Why is Lumière Hydra Cream flagged?"]},
+    {"id": "start_of_day_plan", "name": "Start-of-day plan", "description": "A prioritized action plan across inventory, BOPIS coverage and shrink for the signed-in store.", "tags": ["briefing"], "examples": ["I'm U-M014. Give me my start-of-day plan."]},
+    {"id": "bopis_coverage", "name": "BOPIS coverage", "description": "Who should cover BOPIS picking for a time window, from the shift roster and backlog.", "tags": ["labor", "bopis"], "examples": ["I'm U-M014. Who should cover BOPIS picking until 11?"]}
+  ]
+}

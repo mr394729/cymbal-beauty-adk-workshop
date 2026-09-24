@@ -1,0 +1,70 @@
+[project]
+name = "cymbal-beauty-adk-workshop"
+version = "0.1.0"
+description = "Cymbal Beauty store operations agents: a 3-hour hands-on workshop on Google ADK 2.x multi-agent systems, evaluation, and promotion to Agent Runtime"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+license = "Apache-2.0"
+dependencies = [
+  "google-adk[gcp,eval,mcp]==2.9.0",
+  "google-cloud-aiplatform[agent_engines,adk]>=1.164,<2",
+  "google-cloud-bigquery>=3.41,<4",
+  "google-cloud-secret-manager>=2.24",
+  "google-auth>=2.40",
+  "python-dotenv>=1.1",
+  "pyyaml>=6.0",
+  "pydantic>=2.11",
+  "jinja2>=3.1,<4",
+  "playwright>=1.58,<2",
+  "pypdf>=6,<7",
+  "google-cloud-firestore>=2.21,<3",
+  "google-cloud-pubsub>=2.31,<3",
+  "opentelemetry-instrumentation-google-genai>=0.7b1",
+  "opentelemetry-util-genai[upload]>=0.3b0",
+  "gcsfs>=2026.8.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.26", "ruff>=0.12", "types-pyyaml"]
+toolbox = ["toolbox-core>=0.5"]
+mcp = ["mcp>=1.27,<2"]
+quickstarts = ["fastapi>=0.115", "uvicorn>=0.30", "httpx>=0.27", "requests>=2.32", "google-adk[a2a]==2.9.0", "mcp>=1.27,<2"]   # mcp: quickstart 08 and its stdio server run on the engine too
+notebooks = [
+    "ipykernel>=6,<7",
+    "jupyterlab>=4,<5",
+    "matplotlib>=3.9,<4",
+    "nbclient>=0.10,<1",
+    "nbconvert>=7,<8",
+    "nbformat>=5,<6",
+    "pandas>=2,<3",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agents"]
+include = ["agents/**/*.py", "agents/**/*.md", "agents/**/*.yaml", "agents/**/*.html"]
+
+[tool.pytest.ini_options]
+cache_dir = "build/cache/pytest"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+  "live: needs Google Cloud credentials and the workshop dataset",
+]
+addopts = "-ra"
+
+[tool.ruff]
+cache-dir = "build/cache/ruff"
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# notebooks set the project and quiet SDK warnings in cells before their imports, like the Google sample notebooks
+"*.ipynb" = ["E402"]

@@ -1,0 +1,40 @@
+kind: starter
+id: ops-inventory-1
+title: Shelf availability — Worst shelf gaps
+persona: dana-store-manager
+goal: Recover shelf gaps and protect pickup commitments.
+tags:
+- operations-review
+- manager
+- inventory
+writes: false
+turns:
+- say: Give me the two worst on-shelf problems right now.
+  expect:
+    tools_all:
+    - get_osa_exceptions
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Hydra
+    - Bloom|P-0548
+    - (?:(?:\b(?:7|seven)\b).{0,100}(?:back(?:room|stock))|(?:back(?:room|stock)).{0,100}(?:\b(?:7|seven)\b))
+    - (?:(?:\b(?:3|three)\b).{0,100}(?:back(?:room|stock)|concealer|Bloom)|(?:back(?:room|stock)|concealer|Bloom).{0,100}(?:\b(?:3|three)\b))
+    - pickups?|BOPIS|orders?
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

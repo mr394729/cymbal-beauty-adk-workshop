@@ -1,0 +1,38 @@
+kind: starter
+id: ops-opening-3
+title: Opening priorities — Guest concerns
+persona: dana-store-manager
+goal: Choose the work that needs attention first.
+tags:
+- operations-review
+- manager
+- opening
+writes: false
+turns:
+- say: Which guest concerns should affect our priorities today?
+  expect:
+    tools_all:
+    - get_guest_feedback
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - stock|shel(?:f|ves)
+    - checkout|register|queue
+    - replenish|restock|availab|coverage
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

@@ -1,0 +1,62 @@
+id: manager-start-of-shift
+title: Saturday open — plan, drill in, cover BOPIS, approve, check what is left
+persona: dana-store-manager
+goal: >-
+  The shift-start loop the agent exists for: get the plan, understand the top exception, find someone
+  to cover it, approve one task, then confirm what is still outstanding.
+tags: [manager, plan, inventory, coverage, write]
+writes: true
+notes: >-
+  Run `bash data/load.sh --env dev --tables store_tasks` before and after: turn 5 writes a store_tasks row.
+turns:
+  - say: "Morning. Just opened up — what should I be on top of first?"
+    note: Start of shift. The plan must come from the briefing, not from the model's memory.
+    expect:
+      tools_any: [daily_briefing]
+      tools_none: [create_store_task, delegate_task]
+      contains_any: ["P-0101", "Lumière", "Hydra"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "Why is the Lumière Hydra Cream on that list?"
+    note: Drill into the top item. The counts must be the fixture's, and on_hand must equal shelf + backroom.
+    expect:
+      tools_any: [inventory_excellence]
+      regex_all:
+        - "\\b7\\b"
+        - "\\b12\\b"
+      contains_any: ["backroom", "back room"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "How many of the pending pickups are waiting on that one?"
+    note: A follow-up with no product named — "that one" must still resolve to P-0101.
+    expect:
+      regex_all: ["\\b3\\b"]
+      not_contains: ["which product", "which item"]
+      refusal: false
+
+  - say: "Who can cover BOPIS picking until 11?"
+    expect:
+      tools_any: [associate_orchestration]
+      contains_any: ["A-1004", "Priya", "A-1006", "Taylor", "A-1007", "Noor", "A-1000", "Jordan"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "Ok, raise the backroom check on the Hydra Cream and put Priya on it."
+    approve: true
+    note: The one write in this journey. The confirmation must name the task before anything is written.
+    expect:
+      tools_any: [store_tasks]
+      tools_all: [create_store_task]
+      confirmation: required
+      regex_all: ["T-[0-9A-Za-z]{6,}"]
+      refusal: false
+
+  - say: "What else is still open in the store?"
+    note: The four fixture tasks plus the one just created; nothing invented.
+    expect:
+      tools_any: [get_task_status, store_tasks]
+      contains_any: ["T-00137", "T-00138", "T-00139", "T-00140"]
+      refusal: false
+      no_tool_errors: true

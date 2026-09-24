@@ -1,0 +1,497 @@
+{
+ "source": "Live tablet turns against the deployed dev engine, 21 September 2026 (Agent Runtime revision 7, gemini-3.8-flash, MEDIUM thinking). Span metadata and model usage only; tool inputs and outputs removed.",
+ "turns": [
+  {
+   "turn": "opening",
+   "question": "Morning. What should I prioritize as we open the store today?",
+   "spans": [
+    {
+     "id": "646358ac-46e2-455e-add7-b12157f63ae1",
+     "parent_id": null,
+     "invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "agent": "store_manager_agent",
+     "name": "store_manager_agent",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012127663.079,
+     "duration_ms": 58394.275,
+     "status": "ok"
+    },
+    {
+     "id": "46c02852-e756-4816-b8c2-651c02d93261",
+     "parent_id": "646358ac-46e2-455e-add7-b12157f63ae1",
+     "invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012136937.712,
+     "duration_ms": 2776.708,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 5959,
+      "candidates_token_count": 30,
+      "total_token_count": 6136,
+      "reasoning_token_count": 147,
+      "cached_token_count": null
+     },
+     "tool_calls": [
+      "daily_briefing"
+     ]
+    },
+    {
+     "id": "call_1369160",
+     "parent_id": "646358ac-46e2-455e-add7-b12157f63ae1",
+     "invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "agent": "store_manager_agent",
+     "name": "daily_briefing",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139870.667,
+     "duration_ms": 45867.107,
+     "status": "ok"
+    },
+    {
+     "id": "8dd55713-db2e-48f8-857c-03d3bc0c857f",
+     "parent_id": "call_1369160",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "daily_briefing",
+     "name": "daily_briefing",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139885.989,
+     "duration_ms": 45850.205,
+     "status": "ok"
+    },
+    {
+     "id": "9030ee1d-7720-4e01-9524-7a7cc2120d92",
+     "parent_id": "8dd55713-db2e-48f8-857c-03d3bc0c857f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "signals",
+     "name": "signals",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139888.02,
+     "duration_ms": 6953.652,
+     "status": "ok"
+    },
+    {
+     "id": "5c070be9-63f8-467e-ad21-8c8bf1f263f4",
+     "parent_id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "get_merchandising_work",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139897.246,
+     "duration_ms": 2135.746,
+     "status": "ok"
+    },
+    {
+     "id": "6c57dcf5-bdbc-4c2e-8f77-32ee01387f4e",
+     "parent_id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "get_bopis_demand",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139894.842,
+     "duration_ms": 2732.345,
+     "status": "ok"
+    },
+    {
+     "id": "c6ba2fa0-a921-4aa5-a4a5-f5529535d607",
+     "parent_id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "get_osa_exceptions",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139893.605,
+     "duration_ms": 3145.027,
+     "status": "ok"
+    },
+    {
+     "id": "ef76391e-3f5d-4fb9-957c-3df979c6713f",
+     "parent_id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "get_task_status",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139895.892,
+     "duration_ms": 3631.316,
+     "status": "ok"
+    },
+    {
+     "id": "b0a2721f-5b2b-44cb-bb4a-f67a92b9257b",
+     "parent_id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "get_inventory_context",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012143529.515,
+     "duration_ms": 3308.816,
+     "status": "ok"
+    },
+    {
+     "id": "1baad088-3e02-4f94-a28e-f279efea312f",
+     "parent_id": "9030ee1d-7720-4e01-9524-7a7cc2120d92",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_inventory",
+     "name": "briefing_inventory",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139889.184,
+     "duration_ms": 6951.796,
+     "status": "ok"
+    },
+    {
+     "id": "ed44c5c2-30a3-4fae-b6b0-b3b3ff21edc2",
+     "parent_id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "get_guest_feedback",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139900.588,
+     "duration_ms": 2179.563,
+     "status": "ok"
+    },
+    {
+     "id": "d8a61fe0-5f50-480b-9645-4a9fbb83e05c",
+     "parent_id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "get_pickup_workload",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139902.135,
+     "duration_ms": 2241.424,
+     "status": "ok"
+    },
+    {
+     "id": "5aac50e5-fbcb-421b-bde0-729b512cf2ae",
+     "parent_id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "get_coverage_requirements",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139901.302,
+     "duration_ms": 2263.409,
+     "status": "ok"
+    },
+    {
+     "id": "436f5ed0-b758-4dde-bf11-e07d50393734",
+     "parent_id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "get_shift_roster",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139899.254,
+     "duration_ms": 2369.507,
+     "status": "ok"
+    },
+    {
+     "id": "3adc3e8d-4b0b-4b94-bd02-ad8530f7d70f",
+     "parent_id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "get_traffic_and_backlog",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139898.238,
+     "duration_ms": 3815.236,
+     "status": "ok"
+    },
+    {
+     "id": "4951504e-9095-4621-89ed-e9c2c5e44559",
+     "parent_id": "9030ee1d-7720-4e01-9524-7a7cc2120d92",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_coverage",
+     "name": "briefing_coverage",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139889.59,
+     "duration_ms": 3826.863,
+     "status": "ok"
+    },
+    {
+     "id": "4fe0f5e8-443f-4116-a3d8-27b8766eb9dc",
+     "parent_id": "95067f69-7205-4399-b904-1d927af9cc13",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_shrink",
+     "name": "get_shrink_signals",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139904.411,
+     "duration_ms": 2307.154,
+     "status": "ok"
+    },
+    {
+     "id": "f1d994c5-4846-473b-9007-a8bffcdf6333",
+     "parent_id": "95067f69-7205-4399-b904-1d927af9cc13",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_shrink",
+     "name": "get_loss_controls",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012142217.272,
+     "duration_ms": 623.504,
+     "status": "ok"
+    },
+    {
+     "id": "4ed30214-55bf-48b3-a6b5-0435d870d58a",
+     "parent_id": "95067f69-7205-4399-b904-1d927af9cc13",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_shrink",
+     "name": "get_task_history",
+     "kind": "tool",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012142216.775,
+     "duration_ms": 656.889,
+     "status": "ok"
+    },
+    {
+     "id": "95067f69-7205-4399-b904-1d927af9cc13",
+     "parent_id": "9030ee1d-7720-4e01-9524-7a7cc2120d92",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "briefing_shrink",
+     "name": "briefing_shrink",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012139890.079,
+     "duration_ms": 2986.015,
+     "status": "ok"
+    },
+    {
+     "id": "e8837233-d77e-4c2c-ad39-b4beacf78d61",
+     "parent_id": "677f74c9-adb2-48c7-86cc-eb0eda703290",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "plan_writer",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012146860.802,
+     "duration_ms": 38873.568,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 11283,
+      "candidates_token_count": 934,
+      "total_token_count": 18143,
+      "reasoning_token_count": 5926,
+      "cached_token_count": null
+     },
+     "tool_calls": []
+    },
+    {
+     "id": "677f74c9-adb2-48c7-86cc-eb0eda703290",
+     "parent_id": "8dd55713-db2e-48f8-857c-03d3bc0c857f",
+     "invocation_id": "e-2d8dce1e-c6fb-482b-bc1b-b02522bf10bc",
+     "agent": "plan_writer",
+     "name": "plan_writer",
+     "kind": "agent",
+     "root_invocation_id": "e-8893ee29-c3cd-4ba1-82c7-2dc0ee1c5502",
+     "start_ms": 1790012146842.491,
+     "duration_ms": 38893.273,
+     "status": "ok"
+    }
+   ]
+  },
+  {
+   "turn": "task-follow-up",
+   "question": "Check task T-59CA3CE8 assigned to Priya for setting aside 4 reserved units and replenishing 3 units before her 10:30 AM break.",
+   "spans": [
+    {
+     "id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "parent_id": null,
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "store_manager_agent",
+     "kind": "agent",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012188315.725,
+     "duration_ms": 15569.443,
+     "status": "ok"
+    },
+    {
+     "id": "3a780dd1-f792-49fe-ad47-40072cf72db8",
+     "parent_id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012188467.223,
+     "duration_ms": 2629.313,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 7606,
+      "candidates_token_count": 46,
+      "total_token_count": 7870,
+      "reasoning_token_count": 218,
+      "cached_token_count": null
+     },
+     "tool_calls": [
+      "query_store_data"
+     ]
+    },
+    {
+     "id": "call_888102",
+     "parent_id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "query_store_data",
+     "kind": "tool",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012191266.534,
+     "duration_ms": 1.138,
+     "status": "error"
+    },
+    {
+     "id": "a4a4eabf-156a-4be5-a9ed-bf081d61f026",
+     "parent_id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012191422.992,
+     "duration_ms": 1484.902,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 7912,
+      "candidates_token_count": 48,
+      "total_token_count": 7982,
+      "reasoning_token_count": 22,
+      "cached_token_count": 6198
+     },
+     "tool_calls": [
+      "query_store_data"
+     ]
+    },
+    {
+     "id": "call_1288930",
+     "parent_id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "query_store_data",
+     "kind": "tool",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012193047.173,
+     "duration_ms": 700.662,
+     "status": "ok"
+    },
+    {
+     "id": "3610062d-aed1-4df8-948b-83cbc6f3b2a6",
+     "parent_id": "2aa67ec1-446a-49e1-a1d0-a31ff94bf7b1",
+     "invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-f869416c-029b-4329-a28e-db5d12016fff",
+     "start_ms": 1790012193888.382,
+     "duration_ms": 9679.513,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 8246,
+      "candidates_token_count": 310,
+      "total_token_count": 9608,
+      "reasoning_token_count": 1052,
+      "cached_token_count": null
+     },
+     "tool_calls": []
+    }
+   ]
+  },
+  {
+   "turn": "inventory-report",
+   "question": "Give me the complete store inventory, including product ID, name, category, on-hand units, shelf units and backroom units.",
+   "spans": [
+    {
+     "id": "da30b780-90ba-4fde-9b05-95693c5bdac9",
+     "parent_id": null,
+     "invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "agent": "store_manager_agent",
+     "name": "store_manager_agent",
+     "kind": "agent",
+     "root_invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "start_ms": 1790012205541.508,
+     "duration_ms": 19941.825,
+     "status": "ok"
+    },
+    {
+     "id": "0f046438-4fd9-4539-ba8e-148fd13bcac0",
+     "parent_id": "da30b780-90ba-4fde-9b05-95693c5bdac9",
+     "invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "start_ms": 1790012208605.632,
+     "duration_ms": 5409.511,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 8387,
+      "candidates_token_count": 18,
+      "total_token_count": 8974,
+      "reasoning_token_count": 569,
+      "cached_token_count": 6193
+     },
+     "tool_calls": [
+      "describe_store_data"
+     ]
+    },
+    {
+     "id": "call_901009",
+     "parent_id": "da30b780-90ba-4fde-9b05-95693c5bdac9",
+     "invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "agent": "store_manager_agent",
+     "name": "describe_store_data",
+     "kind": "tool",
+     "root_invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "start_ms": 1790012214204.217,
+     "duration_ms": 0.558,
+     "status": "ok"
+    },
+    {
+     "id": "0cd32aaf-2fdd-4861-9399-c418b63dd2b6",
+     "parent_id": "da30b780-90ba-4fde-9b05-95693c5bdac9",
+     "invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "agent": "store_manager_agent",
+     "name": "gemini-3.8-flash",
+     "kind": "model",
+     "root_invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "start_ms": 1790012214333.147,
+     "duration_ms": 8790.495,
+     "status": "ok",
+     "usage": {
+      "prompt_token_count": 9356,
+      "candidates_token_count": 164,
+      "total_token_count": 9817,
+      "reasoning_token_count": 297,
+      "cached_token_count": 6265
+     },
+     "tool_calls": [
+      "deliver_store_report"
+     ]
+    },
+    {
+     "id": "call_4151862",
+     "parent_id": "da30b780-90ba-4fde-9b05-95693c5bdac9",
+     "invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "agent": "store_manager_agent",
+     "name": "deliver_store_report",
+     "kind": "tool",
+     "root_invocation_id": "e-dff1110f-93e1-42f1-81f2-8073ad4505d6",
+     "start_ms": 1790012223262.691,
+     "duration_ms": 1844.872,
+     "status": "ok"
+    }
+   ]
+  }
+ ]
+}

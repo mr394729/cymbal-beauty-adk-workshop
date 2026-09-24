@@ -1,0 +1,105 @@
+{
+  "eval_set_id": "mcp_tools_agent_golden",
+  "name": "mcp_tools_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "osa_exceptions_over_mcp",
+      "conversation": [
+        {
+          "invocationId": "osa_exceptions_over_mcp-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "What are my top three on-shelf availability exceptions right now?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Your top three on-shelf availability exceptions at S-014 all need a backroom check: Lumière Hydra Cream (P-0101) has 0 on the shelf and 7 in the backroom, below its reorder point of 12; Bloom Concealer (P-0548) has 0 on the shelf and 3 in the backroom; Glow Blush (P-0491) has 0 on the shelf and 7 in the backroom."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "limit": 3
+                },
+                "name": "get_osa_exceptions"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "mcp_tools_agent",
+        "userId": "eval-user",
+        "state": {
+          "user:user_id": "U-M014",
+          "user:store_id": "S-014",
+          "user:role": "store_manager",
+          "user:first_name": "Dana"
+        }
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    },
+    {
+      "evalId": "stock_over_mcp",
+      "conversation": [
+        {
+          "invocationId": "stock_over_mcp-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "How much Lumière Hydra Cream do we have, and why is it flagged?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Cymbal Beauty Naperville (S-014) has 7 units of Lumière Hydra Cream (P-0101) on hand: 0 on the shelf and 7 in the backroom, below the reorder point of 12 with no replenishment in transit. Recommendation: a backroom check to refill the shelf, then replenish."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream"
+                },
+                "name": "check_store_stock"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "mcp_tools_agent",
+        "userId": "eval-user",
+        "state": {
+          "user:user_id": "U-M014",
+          "user:store_id": "S-014",
+          "user:role": "store_manager",
+          "user:first_name": "Dana"
+        }
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

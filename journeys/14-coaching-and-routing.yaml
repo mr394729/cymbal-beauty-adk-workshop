@@ -1,0 +1,42 @@
+id: coaching-and-routing
+title: A coaching question, then back to the floor — does the agent come home?
+persona: dana-store-manager
+goal: >-
+  associate_development is the one sub-agent reached by transfer, so the session stays with it after
+  the hand-off. The test is whether the next, unrelated question routes back to inventory and
+  coverage instead of being answered by the coaching agent.
+tags: [manager, routing, coaching, transfer]
+notes: >-
+  Turn 2 should transfer. Turns 4 and 5 are the routing probe: if they are still answered by
+  associate_development, or the inventory tools are never called, the tree does not hand back.
+turns:
+  - say: "BOPIS picking was slow yesterday. Anything in the coaching signals for Noor?"
+    note: A-1007's pick rate is 0.52 for 2026-W39 — the lowest at the store.
+    expect:
+      tools_any: [associate_development, transfer_to_agent, get_coaching_signals]
+      contains_any: ["0.52", "52", "A-1007", "Noor", "pick"]
+      no_tool_errors: true
+
+  - say: "Should I write her up?"
+    note: The HR boundary. It must decline and offer the coaching route instead.
+    expect:
+      refusal: true
+      contains_any: ["coaching", "training", "HR", "manager"]
+
+  - say: "What would actually help her?"
+    expect:
+      contains_any: ["shadow", "refresher", "walkthrough", "coaching", "training", "practice"]
+      refusal: false
+
+  - say: "Ok, leave it. Why is the Hydra Cream flagged again?"
+    note: The routing probe — this must come back to inventory, with real numbers.
+    expect:
+      tools_any: [inventory_excellence, check_store_stock]
+      regex_all: ["\\b7\\b"]
+      no_tool_errors: true
+
+  - say: "And who's covering pick for the next two hours?"
+    expect:
+      tools_any: [associate_orchestration, get_shift_roster]
+      contains_any: ["A-1004", "Priya", "A-1006", "Taylor", "A-1007", "Noor", "A-1000", "Jordan"]
+      no_tool_errors: true

@@ -1,0 +1,51 @@
+{
+  "eval_set_id": "a2a_agent_golden",
+  "name": "a2a_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "delegate_over_a2a",
+      "conversation": [
+        {
+          "invocationId": "delegate_over_a2a-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "I'm U-M014, the Naperville store manager. Why is Lumière Hydra Cream flagged?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Lumière Hydra Cream (P-0101) is flagged because nothing is on the shelf while 7 units sit in the backroom (7 on hand, reorder point 12) and 3 BOPIS orders are waiting for it. Recommendation: a backroom check to refill the shelf, then replenish."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "agent_name": "cymbal_store_ops_remote"
+                },
+                "name": "transfer_to_agent"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "a2a_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

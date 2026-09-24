@@ -1,0 +1,9 @@
+google-adk==2.9.0
+google-cloud-bigquery>=3.41,<4
+mcp==1.30.0
+google-auth>=2.40,<3
+cachecontrol>=0.14,<1
+requests>=2.32,<3
+python-dotenv>=1.1,<2
+pyyaml>=6,<7
+uvicorn>=0.30,<1

@@ -1,0 +1,49 @@
+id: time-expressions
+title: Until 11, by close, tomorrow, last week — against the frozen clock
+persona: dana-store-manager
+goal: >-
+  Every relative time must resolve against the workshop clock (Saturday 2026-10-03 09:00
+  America/Chicago), not the model's idea of now. S-014 closes at 21:00.
+tags: [manager, time, coverage]
+turns:
+  - say: "What time is it and what day are we on?"
+    expect:
+      tools_any: [workshop_clock]
+      regex_all: ["Saturday"]
+      contains_any: ["2026-10-03", "3 October", "October 3", "Oct 3"]
+      no_tool_errors: true
+
+  - say: "Who's free to pick BOPIS between now and 11?"
+    note: A two-hour window from the frozen now.
+    expect:
+      tools_any: [associate_orchestration]
+      contains_any: ["A-1004", "Priya", "A-1006", "Taylor", "A-1007", "Noor", "A-1000", "Jordan"]
+      no_tool_errors: true
+
+  - say: "And who's still here by close?"
+    note: >-
+      The store closes at 21:00 local and only Aisha (A-1003, 12:00-21:00) is on until then. The
+      four-hour coverage window from the previous turn does not reach the close, so the agent has to
+      widen it — reusing that window silently drops the one person who is actually there.
+    expect:
+      tools_any: [associate_orchestration, get_shift_roster]
+      contains_any: ["A-1003", "Aisha", "21:00", "9:00 pm", "9 pm"]
+      no_tool_errors: true
+
+  - say: "If I raise a task now, when is it due?"
+    note: >-
+      create_store_task sets due_at four hours out — 13:00 local on the frozen day — but no tool reports
+      that without writing, so saying the due time is set on creation is also correct. Quoting an SOP
+      deadline as if it were the task due time is not.
+    expect:
+      contains_any: ["13:00", "1 pm", "1pm", "four hours", "4 hours", "when the task is created",
+                     "on creation", "depends"]
+
+  - say: "What did the shrink look like last week?"
+    note: >-
+      "Last week" against a frozen Saturday. The look-back window is days, so the answer must say what
+      window it actually used rather than implying a calendar week it cannot query.
+    expect:
+      tools_any: [loss_prevention, get_shrink_signals]
+      regex_all: ["\\d+\\s*days?|14|7|week"]
+      no_tool_errors: true

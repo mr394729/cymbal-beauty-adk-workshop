@@ -1,0 +1,133 @@
+capabilities:
+- id: opening
+  title: Opening priorities
+  persona: manager
+  use_case: 1
+  goal: Choose the work that needs attention first.
+  required_tools:
+  - daily_briefing
+  - get_guest_feedback
+  - get_merchandising_work
+  scenarios:
+  - ops-opening-1
+  - ops-opening-2
+  - ops-opening-3
+- id: coverage
+  title: Team coverage
+  persona: manager
+  use_case: 2
+  goal: Plan work around pickup deadlines, assignments and breaks.
+  required_tools:
+  - associate_orchestration
+  - get_coverage_requirements
+  - get_pickup_workload
+  scenarios:
+  - ops-coverage-1
+  - ops-coverage-2
+  - ops-coverage-3
+  followup_scenarios:
+  - ops-coverage-change
+- id: inventory
+  title: Shelf availability
+  persona: manager
+  use_case: 3
+  goal: Recover shelf gaps and protect pickup commitments.
+  required_tools:
+  - get_inventory_context
+  - get_osa_exceptions
+  - get_replenishment_status
+  - get_stock_location
+  scenarios:
+  - ops-inventory-1
+  - ops-inventory-2
+  - ops-inventory-3
+  followup_scenarios:
+  - ops-pickup-allocation
+- id: loss
+  title: Loss and damage
+  persona: manager
+  use_case: 4
+  goal: Connect recorded losses to practical control checks.
+  required_tools:
+  - get_loss_controls
+  - get_shrink_signals
+  scenarios:
+  - ops-loss-1
+  - ops-loss-2
+  - ops-loss-3
+- id: development
+  title: Associate development
+  persona: manager
+  use_case: 5
+  goal: Choose support based on recent work and completed learning.
+  required_tools:
+  - get_coaching_context
+  - get_learning_options
+  scenarios:
+  - ops-development-1
+  - ops-development-2
+  - ops-development-3
+  followup_scenarios:
+  - ops-coaching-followup
+- id: my-work
+  title: My shift
+  persona: associate
+  use_case: 2
+  goal: Review your shift, assigned tasks and pickup work.
+  required_tools:
+  - get_inventory_context
+  - get_bopis_demand
+  - get_merchandising_work
+  - get_my_work
+  scenarios:
+  - ops-my-work-1
+  - ops-my-work-2
+  - ops-my-work-3
+  followup_scenarios:
+  - ops-associate-continuity
+- id: guest-help
+  title: Help a guest
+  persona: associate
+  use_case: 3
+  goal: Find the right product and a useful availability option.
+  required_tools:
+  - get_inventory_context
+  - check_store_stock
+  - get_guest_product_options
+  - get_stock_location
+  scenarios:
+  - ops-guest-help-1
+  - ops-guest-help-2
+  - ops-guest-help-3
+- id: my-development
+  title: My development
+  persona: associate
+  use_case: 5
+  goal: Review your own picking activity and learning options.
+  required_tools:
+  - get_coaching_context
+  - get_learning_options
+  scenarios:
+  - ops-my-development-1
+  - ops-my-development-2
+  - ops-my-development-3
+  followup_scenarios:
+  - ops-associate-continuity
+evaluation_contract:
+  dataset: Unchanged generated operations fixtures in an isolated namespace; never reset the live demo to satisfy
+    a check.
+  starter_count: 24
+  assertions:
+  - Final answers include decision-relevant source facts, not only a tool trajectory.
+  - Read-only prompts cannot call write tools or request confirmation.
+  - Session user, store and role remain unchanged.
+  - Answers use local human-readable time and stay within 180 words (220 for the opening plan).
+  - Follow-ups can reuse current evidence; repeated reads are not required.
+  - Named-product reads may use get_inventory_context; its internal source reads are not separate ADK function-call
+    events.
+  limits:
+  - Regex checks cover explicit facts and scope; human review is still needed for prioritization and tone.
+  - The journey runner keeps one persona per session. Cross-persona task lifecycle is covered by tests/unit/test_operations_capabilities.py,
+    not simulated through chat identity claims.
+  followup_count: 4
+  total_turn_count: 40

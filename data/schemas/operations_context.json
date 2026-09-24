@@ -1,0 +1,32 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "system",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "subject_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "captured_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "source",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "payload",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  }
+]

@@ -1,0 +1,87 @@
+substitutions:
+  _NAMESPACE: ''
+  _ENV: dev
+  _ENGINE_ID: ''
+  _SOP_DATA_STORE: ''
+  _MEMORY_BANK_ENGINE: ''
+  _CYMBAL_MCP_URL: ''
+  _CYMBAL_MCP_AUDIENCE: ''
+  _CYMBAL_MCP_CALLER_SERVICE_ACCOUNT: ''
+  _CYMBAL_MCP_SCOPE_SECRET: ''
+  _MODEL_ARMOR_TEMPLATE: ''
+steps:
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: release
+    entrypoint: bash
+    env:
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - WORKSHOP_NAMESPACE=${_NAMESPACE}
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_LOCATION=global
+      - COMMIT_SHA=$COMMIT_SHA
+      - STORE_OPS_ENV=${_ENV}
+      - SOP_DATA_STORE=${_SOP_DATA_STORE}
+      - MEMORY_BANK_ENGINE=${_MEMORY_BANK_ENGINE}
+      - CYMBAL_MCP_URL=${_CYMBAL_MCP_URL}
+      - CYMBAL_MCP_AUDIENCE=${_CYMBAL_MCP_AUDIENCE}
+      - CYMBAL_MCP_CALLER_SERVICE_ACCOUNT=${_CYMBAL_MCP_CALLER_SERVICE_ACCOUNT}
+      - CYMBAL_MCP_SCOPE_SECRET=${_CYMBAL_MCP_SCOPE_SECRET}
+      - MODEL_ARMOR_TEMPLATE=${_MODEL_ARMOR_TEMPLATE}
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        uv sync --locked --all-extras
+        uv run python deployment/iam/cloudbuild_runtime.py
+        uv run python deployment/release.py
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: deploy
+    entrypoint: bash
+    env:
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - WORKSHOP_NAMESPACE=${_NAMESPACE}
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_LOCATION=global
+      - DEPLOY_FROM_PIPELINE=1
+      - AGENT_ENGINE_ID=${_ENGINE_ID}
+      - COMMIT_SHA=$COMMIT_SHA
+      - STORE_OPS_ENV=${_ENV}
+      - SOP_DATA_STORE=${_SOP_DATA_STORE}
+      - MEMORY_BANK_ENGINE=${_MEMORY_BANK_ENGINE}
+      - CYMBAL_MCP_URL=${_CYMBAL_MCP_URL}
+      - CYMBAL_MCP_AUDIENCE=${_CYMBAL_MCP_AUDIENCE}
+      - CYMBAL_MCP_CALLER_SERVICE_ACCOUNT=${_CYMBAL_MCP_CALLER_SERVICE_ACCOUNT}
+      - CYMBAL_MCP_SCOPE_SECRET=${_CYMBAL_MCP_SCOPE_SECRET}
+      - MODEL_ARMOR_TEMPLATE=${_MODEL_ARMOR_TEMPLATE}
+    args:
+      - -c
+      - uv run python deployment/deploy.py --env ${_ENV} --release release.json
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: smoke
+    entrypoint: bash
+    env:
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - WORKSHOP_NAMESPACE=${_NAMESPACE}
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_LOCATION=global
+      - STORE_OPS_ENV=${_ENV}
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        REV=$$(uv run python -c "import json; print(json.load(open('deployment/deployment_info.${_NAMESPACE}.${_ENV}.json'))['revision'])")
+        test -n "$$REV" || { echo "deploy recorded no revision"; exit 1; }
+        uv run python deployment/smoke.py --env ${_ENV} --revision "$$REV"
+        uv run python deployment/remote_eval.py --env ${_ENV} --revision "$$REV"
+artifacts:
+  objects:
+    location: gs://$PROJECT_ID-cymbal-store-ops-staging/releases/$BUILD_ID/
+    paths:
+      - release.json
+      - deployment/deployment_info.${_NAMESPACE}.${_ENV}.json
+      - build/remote_eval.${_ENV}.json
+      - build/runtime-features.json
+options:
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+timeout: 2400s

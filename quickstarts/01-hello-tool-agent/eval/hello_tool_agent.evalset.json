@@ -1,0 +1,52 @@
+{
+  "eval_set_id": "hello_tool_agent_golden",
+  "name": "hello_tool_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "stock_naperville",
+      "conversation": [
+        {
+          "invocationId": "stock_naperville-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "Is Lumière Hydra Cream in stock in Naperville?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Cymbal Beauty Naperville has 7 units of Lumière Hydra Cream on hand, 0 on the shelf and 7 in the backroom, and it is eligible for pick-up."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream",
+                  "city": "Naperville"
+                },
+                "name": "check_store_stock"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "hello_tool_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

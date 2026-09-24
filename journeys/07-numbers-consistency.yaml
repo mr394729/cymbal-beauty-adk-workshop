@@ -1,0 +1,45 @@
+id: numbers-consistency
+title: The same figure asked four ways, plus arithmetic the tools do not do
+persona: dana-store-manager
+goal: >-
+  P-0101 at S-014 is 0 on shelf, 7 in the backroom, 7 on hand, reorder point 12, shelf capacity 18.
+  Asked four different ways the answers must be the same numbers, and the agent must be able to add.
+tags: [manager, numbers, consistency, inventory]
+notes: >-
+  on_hand = on_shelf_qty + backroom_qty is an invariant of the dataset. If any turn reports on-hand as
+  something other than 7, or the shelf as something other than 0, the agent is inventing or
+  mis-reading the envelope.
+turns:
+  - say: "How many Lumière Hydra Cream do we have on hand?"
+    expect:
+      tools_any: [inventory_excellence, check_store_stock]
+      regex_all: ["\\b7\\b"]
+      regex_none: ["\\b(14|19)\\b"]
+      no_tool_errors: true
+
+  - say: "And how many of those are actually out on the shelf?"
+    expect:
+      regex_all: ["\\b0\\b|zero|none"]
+      regex_none: ["\\b7\\b on the shelf"]
+
+  - say: "How many in the backroom?"
+    expect:
+      regex_all: ["\\b7\\b"]
+
+  - say: "What's the reorder point, and how far below it are we?"
+    note: 12 minus 7 is 5 — arithmetic no tool returns.
+    expect:
+      regex_all: ["\\b12\\b"]
+      contains_any: ["5", "five"]
+
+  - say: "If I shelve everything in the back, how much of the shelf is still empty?"
+    note: Shelf capacity 18, 7 shelved, 11 gaps. A wrong total here is worse than "I can't work that out".
+    expect:
+      regex_all: ["\\b18\\b"]
+      contains_any: ["11", "eleven"]
+
+  - say: "So say it back to me in one line: shelf, backroom, on hand, reorder point."
+    note: The consistency check. All four numbers, unchanged, in one answer.
+    expect:
+      regex_all: ["\\b0\\b|zero|none", "\\b7\\b", "\\b12\\b"]
+      regex_none: ["\\b(14|19|24)\\b"]

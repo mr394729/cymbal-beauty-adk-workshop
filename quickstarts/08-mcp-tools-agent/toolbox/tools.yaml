@@ -1,0 +1,44 @@
+# MCP Toolbox for Databases — the Cymbal Beauty catalog exposed as three read-only MCP tools.
+#
+#   set -a; . ./.env; set +a      # GOOGLE_CLOUD_PROJECT and WORKSHOP_NAMESPACE (both are substituted below)
+#   ./toolbox --config quickstarts/08-mcp-tools-agent/toolbox/tools.yaml
+#
+# allowedDatasets resolves to <project>.cymbal_beauty_<namespace>_dev, the dataset `uv run python data/generate.py && bash data/load.sh --env dev` loaded for you.
+# Governance lives in this file, not in the agent: writeMode: blocked refuses every non-SELECT
+# statement server-side, allowedDatasets fences the agent into one dataset, and the row/byte caps
+# bound cost. Swap allowedDatasets to move the agent to another environment — zero agent code changes.
+kind: source
+name: cymbal-bigquery
+type: bigquery
+project: ${GOOGLE_CLOUD_PROJECT}
+location: US
+writeMode: blocked
+allowedDatasets:
+  - ${GOOGLE_CLOUD_PROJECT}.cymbal_beauty_${WORKSHOP_NAMESPACE}_dev
+maxQueryResultRows: 50
+maximumBytesBilled: 104857600
+---
+kind: tool
+name: list_table_ids
+type: bigquery-list-table-ids
+source: cymbal-bigquery
+description: List the tables in the Cymbal Beauty dataset. Call this before writing SQL against a table you have not seen.
+---
+kind: tool
+name: get_table_info
+type: bigquery-get-table-info
+source: cymbal-bigquery
+description: Describe one table (columns, types, descriptions) in the Cymbal Beauty dataset.
+---
+kind: tool
+name: execute_sql
+type: bigquery-execute-sql
+source: cymbal-bigquery
+description: Run one read-only BigQuery Standard SQL SELECT against the Cymbal Beauty dataset. Writes are refused by the server.
+---
+kind: toolset
+name: cymbal_nl2sql
+tools:
+  - list_table_ids
+  - get_table_info
+  - execute_sql

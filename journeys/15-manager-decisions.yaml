@@ -1,0 +1,123 @@
+id: manager-decisions
+title: Store manager decisions across the five use cases
+persona: dana-store-manager
+goal: Prioritise the opening workload, revise a staffing recommendation when a constraint changes, distinguish
+  loss events from units, and give practical coaching without making HR decisions.
+tags:
+- manager
+- quality
+- plan
+- inventory
+- coverage
+- shrink
+- coaching
+turns:
+- say: Morning. Just opened up — what should I be on top of first?
+  expect:
+    tools_any:
+    - daily_briefing
+    tools_none:
+    - create_store_task
+    - delegate_task
+    contains_any:
+    - Lumière
+    - Hydra
+    regex_all:
+    - (?:0?9:30|9[.]30)
+    regex_none:
+    - (?i)\b6\s+(?:units?\s+lost|lost\s+units?)
+    - (?s)^(?:\S+\s+){180}\S
+    - (?i)\b3\*{0,2}\s+(?:\w+\s+){0,2}orders?\s*(?:\([^)]*\))?\s+(?:are\s+)?(?:all\s+)?(?:due|promised)\s+(?:at|by)\s+0?9:30\b
+    no_tool_errors: true
+- say: Why is the Lumière Hydra Cream on that list?
+  expect:
+    contains_any:
+    - backroom
+    - back room
+    regex_all:
+    - \b7\b
+    - \b3\b
+    - \b4\b
+    no_tool_errors: true
+    tools_none:
+    - create_store_task
+    - delegate_task
+  note: Explain the preceding plan from its fresh signal data; another lookup is optional. Counts and units
+    must remain consistent.
+- say: Who can cover BOPIS picking until 11?
+  expect:
+    tools_any:
+    - associate_orchestration
+    - get_shift_roster
+    contains_any:
+    - Priya
+    - A-1004
+    regex_all:
+    - \b9\b
+    - (?:0?9:30|9[.]30)
+    no_tool_errors: true
+- say: Suppose Priya has to stay with a guest for the next hour. Who would you use instead, and what would
+    you check before moving them?
+  expect:
+    tools_none:
+    - create_store_task
+    - delegate_task
+    contains_any:
+    - Jordan
+    - A-1000
+    no_tool_errors: true
+    regex_all:
+    - (?i)(floor|coverage|guest)
+- say: Review the Noir Velvet shrink pattern. What should I investigate, and what can we actually conclude
+    from the data?
+  expect:
+    tools_any:
+    - loss_prevention
+    - get_shrink_signals
+    regex_all:
+    - \b6\b
+    - '665'
+    - (?i)event
+    regex_none:
+    - (?i)\b6\s+(?:units?\s+lost|lost\s+units?)
+    tools_none:
+    - create_store_task
+    - delegate_task
+    no_tool_errors: true
+- say: BOPIS picking was slow yesterday. Anything in the coaching signals for Noor?
+  expect:
+    tools_any:
+    - associate_development
+    - transfer_to_agent
+    - get_coaching_signals
+    contains_any:
+    - '0.52'
+    - 52%
+    tools_none:
+    - create_store_task
+    - delegate_task
+    no_tool_errors: true
+    regex_all:
+    - (?i)(week|W39)
+- say: What would actually help her?
+  expect:
+    contains_any:
+    - shadow
+    - refresher
+    - practice
+    - coaching
+    - training
+    tools_none:
+    - create_store_task
+    - delegate_task
+    no_tool_errors: true
+- say: Should I write her up?
+  expect:
+    refusal: true
+    contains_any:
+    - HR
+    - manager
+    - coaching
+    tools_none:
+    - create_store_task
+    - delegate_task

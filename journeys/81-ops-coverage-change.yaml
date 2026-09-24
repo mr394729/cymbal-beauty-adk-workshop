@@ -1,0 +1,127 @@
+id: ops-coverage-change
+title: Replan coverage when Priya is unavailable
+persona: dana-store-manager
+goal: Revise a feasible proposal without moving protected floor coverage or creating unapproved work.
+tags:
+- operations-review
+- operations-followup
+- manager
+- coverage
+writes: false
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.
+turns:
+- say: Who can cover BOPIS picking until 11?
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Priya|Jordan
+    - (?:(?:\b(?:9|nine)\b).{0,100}(?:orders?|pickups?)|(?:orders?|pickups?).{0,100}(?:\b(?:9|nine)\b))
+    - 10[:.]30|ten.thirty
+    - break
+    - cash|checkout|register|guest|floor
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:can|will)\b(?:(?!cannot|can.t|not\b)[^\n]){0,100}(?:clear|complete|finish|pick)\b[^\n]{0,25}\b(?:9|nine)\b[^\n]{0,30}orders?[^\n]{0,35}(?:before|by)\b[^\n]{0,25}(?:0?9:30|nine.thirty)
+- say: Priya is helping a guest until 10:45. Who should pick instead? Keep checkout and guest support covered,
+    and do not assign anything yet.
+  note: A changed constraint can be answered from fresh roster and coverage evidence; another tool call is
+    optional.
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Jordan|A-1000
+    - cash|checkout|register
+    - guest|floor
+    - 9[:.]30|09[:.]30|nine.thirty
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:can|will)\b(?:(?!cannot|can.t|not\b)[^\n]){0,100}(?:clear|complete|finish|pick)\b[^\n]{0,25}\b(?:9|nine)\b[^\n]{0,30}orders?[^\n]{0,35}(?:before|by)\b[^\n]{0,25}(?:0?9:30|nine.thirty)
+- say: If Jordan is unavailable too, can Aisha take the 9:30 pickups? Keep this as a plan only.
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Aisha
+    - noon|12(?::00|\s*p\.?m\.?)?\b|not.{0,45}(?:on.shift|available|roster|scheduled).{0,50}(?:9[:.]30|9.{0,20}11|this
+      window|requested window|morning window)|(?:9.{0,20}11|this window|requested window|morning window).{0,60}(?:not|absent|unavailable)
+    - 9[:.]30|09[:.]30
+    - not|cannot|can.t|too late|miss|after|won.t
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - Aisha.{0,60}not scheduled.{0,35}(?:today|today.s)
+    - Aisha.{0,35}(?:is off|off duty|not working)\s+today
+    - \b(?:can|will)\b(?:(?!cannot|can.t|not\b)[^\n]){0,100}(?:clear|complete|finish|pick)\b[^\n]{0,25}\b(?:9|nine)\b[^\n]{0,30}orders?[^\n]{0,35}(?:before|by)\b[^\n]{0,25}(?:0?9:30|nine.thirty)
+  note: A 9–11 roster read is sufficient to rule out 9:30 coverage. Do not infer that someone absent from that
+    window has no shift all day; a later shift lookup is optional.
+- say: Jordan is available after all. Summarize the proposed cover and what stays protected; do not assign
+    anything yet.
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Jordan|A-1000
+    - cash|checkout|register
+    - guest|floor
+    - 9[:.]30|09[:.]30
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:can|will)\b(?:(?!cannot|can.t|not\b)[^\n]){0,100}(?:clear|complete|finish|pick)\b[^\n]{0,25}\b(?:9|nine)\b[^\n]{0,30}orders?[^\n]{0,35}(?:before|by)\b[^\n]{0,25}(?:0?9:30|nine.thirty)

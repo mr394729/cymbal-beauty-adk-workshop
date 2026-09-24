@@ -1,0 +1,44 @@
+id: manager-midshift-followups
+title: Mid-shift follow-ups that only make sense in context
+persona: dana-store-manager
+goal: >-
+  Everything after turn 1 is elliptical — "and the other one?", "do the same for the concealer",
+  "is that enough?" — the way a manager actually types on a handheld between guests.
+tags: [manager, context, inventory, follow-up]
+turns:
+  - say: "Give me the two worst on-shelf problems right now."
+    expect:
+      tools_any: [inventory_excellence, get_osa_exceptions, daily_briefing]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "And the other one?"
+    note: No noun at all. The agent must pick up the second item from its own previous answer.
+    expect:
+      not_contains: ["which one", "which product", "could you clarify", "can you clarify"]
+      refusal: false
+
+  - say: "Do the same for the Velvet Concealer."
+    note: >-
+      Three products are called Velvet Concealer (P-0452, P-0476, P-0566). Naming which one, or saying
+      there are several, is fine; silently picking one without saying so is not.
+    expect:
+      tools_any: [inventory_excellence, check_store_stock]
+      regex_all: ["P-0(452|476|566)|two|three|both|all of them|variants"]
+      no_tool_errors: true
+
+  - say: "Is that enough to get through today?"
+    note: A judgement question. It must rest on the numbers already fetched, not on a new guess.
+    expect:
+      regex_all: ["\\d"]
+      regex_none: ["(?i)\\b(not enough|insufficient|will run out|run out today|stock ?out today)\\b"]
+
+  - say: "Fine. Back to the Hydra Cream — when is the replenishment landing?"
+    note: >-
+      The replenishment line for P-0101 at S-014 is delayed, expected 2026-10-01 (already past). The agent
+      may answer from the numbers it fetched earlier in this session rather than re-reading, so no tool is
+      required here — but the status and the date must be the real ones.
+    expect:
+      contains_any: ["delayed", "delay", "overdue", "past"]
+      regex_all: ["10-01|October 1|Oct 1"]
+      no_tool_errors: true

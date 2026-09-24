@@ -1,0 +1,62 @@
+{
+  "eval_set_id": "stock_invariant",
+  "name": "Fault-switch demo: stale_stock",
+  "eval_cases": [
+    {
+      "eval_id": "osa_explanation",
+      "conversation": [
+        {
+          "invocation_id": "inv-osa_explanation",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Why is Lumière Hydra Cream flagged?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Lumière Hydra Cream (P-0101) at S-014 has 0 on shelf, 7 in the backroom and 7 on hand against a reorder point of 12, with BOPIS orders pending and no open task. Pick 4 units from skincare backstock bay B2 for 3 pickup orders due between 9:30 and 10 a.m.; replenish the shelf with the remaining 3. The inbound shipment is delayed."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream"
+                },
+                "name": "inventory_excellence"
+              },
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream"
+                },
+                "name": "get_inventory_context"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 0.0
+        }
+      ],
+      "session_input": {
+        "app_name": "cymbal_store_ops",
+        "user_id": "eval_user",
+        "state": {
+          "user:user_id": "U-M014",
+          "user:store_id": "S-014",
+          "user:role": "store_manager",
+          "user:first_name": "Dana"
+        }
+      },
+      "creation_timestamp": 0.0,
+      "final_session_state": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

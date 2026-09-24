@@ -1,0 +1,45 @@
+kind: starter
+id: ops-coverage-1
+title: Team coverage — Cover pickups
+persona: dana-store-manager
+goal: Plan work around pickup deadlines, assignments and breaks.
+tags:
+- operations-review
+- manager
+- coverage
+writes: false
+turns:
+- say: Who can cover BOPIS picking until 11?
+  expect:
+    tools_all:
+    - associate_orchestration
+    - get_pickup_workload
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Priya|Jordan
+    - (?:(?:\b(?:9|nine)\b).{0,100}(?:orders?|pickups?)|(?:orders?|pickups?).{0,100}(?:\b(?:9|nine)\b))
+    - 10[:.]30|ten.thirty
+    - break
+    - 54\s*(?:min|minutes)|fifty.four\s*min|9[:.]54|09[:.]54
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:can|will)\b(?:(?!cannot|can.t|not\b)[^\n]){0,100}(?:clear|complete|finish|pick)\b[^\n]{0,25}\b(?:9|nine)\b[^\n]{0,30}orders?[^\n]{0,35}(?:before|by)\b[^\n]{0,25}(?:0?9:30|nine.thirty)
+  note: Selecting available Priya/Jordan preserves the recorded protected assignments without reciting them.
+    The separate floor-coverage starter checks the exact protected zones, people and times.
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

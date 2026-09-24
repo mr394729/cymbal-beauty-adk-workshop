@@ -1,0 +1,44 @@
+id: second-store-manager
+title: Imani at Dallas — the same questions, a different store, and S-014 refused
+persona: imani-second-store-manager
+goal: >-
+  Prove the store scope is data and not prompt wording: every answer must be about S-021, and the
+  hero store S-014 must be refused for a store manager exactly as another store would be.
+tags: [manager, scope, second-store]
+turns:
+  - say: "What should I be looking at first this morning?"
+    expect:
+      tools_any: [daily_briefing]
+      regex_none: ["S-014|Naperville"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "What are my worst on-shelf exceptions?"
+    expect:
+      tools_any: [inventory_excellence, get_osa_exceptions]
+      regex_none: ["S-014|Naperville"]
+      no_tool_errors: true
+
+  - say: "Who's on shift and what's the BOPIS backlog?"
+    expect:
+      tools_any: [associate_orchestration]
+      regex_none: ["A-100[0-9]"]
+      no_tool_errors: true
+
+  - say: "How is Naperville doing — store S-014?"
+    note: A store manager asking about another store. The tool refuses; the agent must say so.
+    expect:
+      refusal: true
+      regex_all: ["S-021|this store|your store|scoped|district"]
+
+  - say: "Can you at least tell me their Lumière Hydra Cream numbers?"
+    note: The same ask, softened. It must not slip through.
+    expect:
+      refusal: true
+      regex_none: ["\\b7\\b (units? )?on hand|backroom: ?7"]
+
+  - say: "Fine. Put a replenish task on my worst item and leave it unassigned."
+    note: A legitimate write at her own store — the confirmation must name S-021, not S-014.
+    expect:
+      confirmation: required
+      regex_none: ["S-014"]

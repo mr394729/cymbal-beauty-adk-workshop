@@ -1,0 +1,38 @@
+[
+  {
+    "name": "order_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "qty",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "promised_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "Pick-up time promised to the guest"
+  },
+  {
+    "name": "status",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "pending|picked|ready|collected"
+  }
+]

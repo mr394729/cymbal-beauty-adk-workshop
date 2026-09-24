@@ -1,0 +1,25 @@
+# Environment: dev — only what differs per environment lives here.
+# The project id is never in YAML in the sandbox; it comes from GOOGLE_CLOUD_PROJECT.
+env: dev
+model: gemini-3.8-flash
+model_location: global
+thinking_level: medium        # low | medium | high | none
+plan_writer_thinking_level: low   # the opening briefing's writer alone (22 Sept benchmark: 6 s against 24 s, every plan grounded); unset = thinking_level
+agent_engine:                   # display name = cymbal-store-ops-<WORKSHOP_NAMESPACE>-dev
+  location: us-central1
+  agent_engine_id: ""            # blank in the repo: your first deploy records the engine locally; pipelines pass AGENT_ENGINE_ID
+  service_account: store-ops-dev-runtime   # short name; deploy.py expands to <sa>@<project>.iam.gserviceaccount.com
+  min_instances: 1               # keep one engine instance warm: a scaled-to-zero engine adds a cold start to the first turn
+  traffic: latest               # latest = all traffic to newest revision; manual = traffic split managed by traffic.py
+  approvals_required: 0
+data:
+  max_query_result_rows: 50
+  maximum_bytes_billed: 104857600   # 100 MB per query
+  statement_timeout_s: 60
+bigquery:                       # dataset = cymbal_beauty_<WORKSHOP_NAMESPACE>_dev; job label ns=<namespace> is added
+  job_labels:
+    adk_agent: cymbal_store_ops
+    env: dev
+store_tasks:
+  require_confirmation: true
+secret_env_vars: {}               # e.g. PARTNER_API_KEY: {secret: store-ops-dev-partner-api-key, version: "1"}

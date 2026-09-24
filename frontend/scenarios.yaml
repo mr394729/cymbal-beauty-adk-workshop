@@ -1,0 +1,507 @@
+scenarios:
+- id: opening
+  title: Opening priorities
+  sign_in: manager
+  sheet_row: 1
+  situation: Choose the work that needs attention first.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Opening plan
+    say: Morning. Just opened up — what should I be on top of first?
+    journey: ops-opening-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Display work
+    say: What display or price-label work is due this morning?
+    journey: ops-opening-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Guest concerns
+    say: Which guest concerns should affect our priorities today?
+    journey: ops-opening-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Pickup deadlines
+    say: Which pickup orders are due first this morning?
+    complexity: standard
+    validation_status: not_run
+  - label: Unfinished work
+    say: What open store tasks still need attention?
+    complexity: standard
+    validation_status: not_run
+  - label: Store stock overview
+    say: Give me a breakdown of the stock in our store by category.
+    complexity: standard
+    validation_status: not_run
+  - label: First half-hour
+    say: I have thirty minutes before I need to be on the floor. What should happen first across pickups, empty
+      shelves and display work, and why?
+    complexity: complex
+    validation_status: not_run
+  - label: Limited capacity
+    say: If we can take on only two extra tasks this morning, which would make the biggest difference for guests
+      without risking pickup promises?
+    complexity: complex
+    validation_status: not_run
+  - label: Avoid duplicate work
+    say: Review our opening priorities against work already assigned. What still needs a decision from me, and what
+      can the team continue?
+    complexity: complex
+    validation_status: not_run
+  - label: Guest impact
+    say: Connect the recent guest feedback with today’s stock and pickup issues. Which practical changes should
+      we prioritize, and what evidence supports them?
+    complexity: complex
+    validation_status: not_run
+- id: coverage
+  title: Team coverage
+  sign_in: manager
+  sheet_row: 2
+  situation: Plan work around pickup deadlines, assignments and breaks.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Cover pickups
+    say: Who can cover BOPIS picking until 11?
+    journey: ops-coverage-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Protect floor coverage
+    say: Which floor coverage must we preserve while covering pickups until 11?
+    journey: ops-coverage-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Plan around breaks
+    say: How should we cover picking around Priya’s break this morning?
+    journey: ops-coverage-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Who is available
+    say: Who is on shift and available for extra work this morning?
+    complexity: standard
+    validation_status: not_run
+  - label: Current assignments
+    say: What work is already assigned to Priya?
+    complexity: standard
+    validation_status: not_run
+  - label: Pickup workload
+    say: How much pickup work is waiting, and when is the first promise due?
+    complexity: standard
+    validation_status: not_run
+  - label: Priya unavailable
+    say: If Priya cannot leave her current area, who could cover the pending pickups until 11 while keeping checkout
+      covered?
+    complexity: complex
+    validation_status: not_run
+  - label: Deadline feasibility
+    say: Can one associate finish the pickup queue on time? Compare the earliest promises with the estimated work
+      and the breaks we need to cover.
+    complexity: complex
+    validation_status: not_run
+  - label: Competing priorities
+    say: We need pickup support and shelf replenishment this morning. Suggest a sequence that fits people’s skills
+      and breaks without leaving guest support uncovered.
+    complexity: complex
+    validation_status: not_run
+  - label: New rush of guests
+    say: Suppose guest traffic rises earlier than forecast. Which parts of our pickup coverage plan could change,
+      and which coverage should we protect?
+    complexity: complex
+    validation_status: not_run
+- id: inventory
+  title: Shelf availability
+  sign_in: manager
+  sheet_row: 3
+  situation: Recover shelf gaps and protect pickup commitments.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Worst shelf gaps
+    say: Give me the two worst on-shelf problems right now.
+    journey: ops-inventory-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Locate Hydra Cream
+    say: Where should Priya pick the Lumière Hydra Cream, and how much should stay for pickups?
+    journey: ops-inventory-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Incoming Hydra stock
+    say: When is the Lumière Hydra Cream replenishment expected, and what should we do meanwhile?
+    journey: ops-inventory-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: All store stock
+    say: Show me our store’s inventory by category, including shelf and backroom quantities.
+    complexity: standard
+    validation_status: not_run
+  - label: Haircare availability
+    say: Which haircare products are out of stock at our store?
+    complexity: standard
+    validation_status: not_run
+  - label: Browse shampoo
+    say: Show me the shampoos we have in stock with their prices.
+    complexity: standard
+    validation_status: not_run
+  - label: Protect pickup stock
+    say: For Lumière Hydra Cream, separate stock on hand, recorded reservations and pending pickup demand. How much
+      can safely go to the shelf?
+    complexity: complex
+    validation_status: not_run
+  - label: Replenishment priorities
+    say: Compare skincare and makeup shelf gaps. Which should we address first when pickup commitments and inbound
+      stock are considered?
+    complexity: complex
+    validation_status: not_run
+  - label: Stock and task overlap
+    say: Which empty shelves have backroom stock, and which already have an open task? Recommend the next work without
+      duplicating an assignment.
+    complexity: complex
+    validation_status: not_run
+  - label: Guest alternatives
+    say: A guest wants Lumière Hydra Cream today. Compare what we can offer from our store with nearby stock, keeping
+      existing pickup commitments protected.
+    complexity: complex
+    validation_status: not_run
+- id: loss
+  title: Loss and damage
+  sign_in: manager
+  sheet_row: 4
+  situation: Connect recorded losses to practical control checks.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Review fragrance losses
+    say: What do the Noir Velvet loss records show over the last 14 days?
+    journey: ops-loss-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Check the locked case
+    say: Have any control checks found a problem with the Noir Velvet locked case?
+    journey: ops-loss-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Choose follow-up work
+    say: What follow-up work would address the Noir Velvet control findings?
+    journey: ops-loss-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Loss by category
+    say: Break down recorded losses in our store by product category over the last 14 days.
+    complexity: standard
+    validation_status: not_run
+  - label: Damage records
+    say: Which recent loss records are recorded as damage?
+    complexity: standard
+    validation_status: not_run
+  - label: Existing investigations
+    say: What investigation work is already open for Noir Velvet?
+    complexity: standard
+    validation_status: not_run
+  - label: Reconcile the records
+    say: For Noir Velvet, separate unknown loss, damage, adjustments and return anomalies. Which records link to
+      the same event so we avoid counting the loss twice?
+    complexity: complex
+    validation_status: not_run
+  - label: Control evidence
+    say: Compare the Noir Velvet loss history with the locked-case checks. What is supported by the evidence, and
+      what still needs investigation?
+    complexity: complex
+    validation_status: not_run
+  - label: Prioritize investigations
+    say: Which products account for the largest recorded loss value in the last 14 days, and what existing investigations
+      should affect our priorities?
+    complexity: complex
+    validation_status: not_run
+  - label: Practical prevention
+    say: Suggest a follow-up plan for the Noir Velvet case issue that fits the control findings and current tasks.
+      Separate store work we can assign from actions we cannot carry out here.
+    complexity: complex
+    validation_status: not_run
+- id: development
+  title: Associate development
+  sign_in: manager
+  sheet_row: 5
+  situation: Choose support based on recent work and completed learning.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Review Noor’s picking
+    say: BOPIS picking was slow yesterday. Anything in the coaching signals for Noor?
+    journey: ops-development-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Find useful learning
+    say: Which short learning activity would help Noor with stock searches?
+    journey: ops-development-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Review Noor’s progress
+    say: What should I review on Noor’s next picking shift after the stock-location walkthrough?
+    journey: ops-development-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Completed learning
+    say: Which learning activities has Noor already completed?
+    complexity: standard
+    validation_status: not_run
+  - label: Recent picking context
+    say: What do Noor’s most recent picking activities show?
+    complexity: standard
+    validation_status: not_run
+  - label: Priya’s learning
+    say: Which learning activities are available to Priya?
+    complexity: standard
+    validation_status: not_run
+  - label: Fair comparison
+    say: Compare Noor’s most recent picking shift with the earlier period, accounting for the number of picks and
+      the stock-search delays.
+    complexity: complex
+    validation_status: not_run
+  - label: Short coaching plan
+    say: Build a short coaching conversation for Noor using recent picking activity and completed learning. What
+      should we practise and review on the next shift?
+    complexity: complex
+    validation_status: not_run
+  - label: Skill or stock issue
+    say: Do Noor’s picking delays point to a learning need, a stock-location problem, or both? Explain the evidence
+      and what we would need to check.
+    complexity: complex
+    validation_status: not_run
+  - label: Measure progress
+    say: Choose one useful learning activity for Noor and suggest how to assess progress after it, without treating
+      different-sized shifts as directly comparable.
+    complexity: complex
+    validation_status: not_run
+- id: end-of-day
+  title: End of day report
+  sign_in: manager
+  sheet_row: 6
+  situation: Close out yesterday with the numbers, what went well and what to follow up.
+  watch_for: A PDF report with metrics from the data and a short written summary.
+  prompts:
+  - label: End-of-day report
+    say: Create the end-of-day report for yesterday.
+    complexity: standard
+    validation_status: not_run
+  - label: Yesterday in numbers
+    say: How did yesterday go? Give me sales, visitors, conversion and average basket against the day before.
+    complexity: standard
+    validation_status: not_run
+  - label: Best sellers
+    say: Which products sold best yesterday, and how did that compare with the day before?
+    complexity: standard
+    validation_status: not_run
+  - label: Conversion peak
+    say: When was conversion highest yesterday, and when were we busiest?
+    complexity: standard
+    validation_status: not_run
+  - label: Sales per labour hour
+    say: What were yesterday's sales per paid hour, and who worked?
+    complexity: standard
+    validation_status: not_run
+  - label: Issues to follow up
+    say: Which loss or guest issues from yesterday still need a follow-up?
+    complexity: standard
+    validation_status: not_run
+  - label: Report for the district
+    say: Write yesterday's end-of-day report for my district manager, with the two things we should change tomorrow.
+    complexity: complex
+    validation_status: not_run
+  - label: What drove the change
+    say: Sales moved against the day before. Which categories and products explain most of the change, and what
+      should we check before calling it a trend?
+    complexity: complex
+    validation_status: not_run
+  - label: Staffing against demand
+    say: Compare yesterday's staffing with when guests came in. Were we covered at the peaks, and what would you
+      change in tomorrow's plan?
+    complexity: complex
+    validation_status: not_run
+  - label: Close-out priorities
+    say: Before I leave, what are the three things from today's results that tomorrow's opening team should act on,
+      and what evidence supports each?
+    complexity: complex
+    validation_status: not_run
+- id: my-work
+  title: My shift
+  sign_in: associate
+  sheet_row: 2
+  situation: Review your shift, assigned tasks and pickup work.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: My assigned work
+    say: Show my shift and assigned tasks.
+    journey: ops-my-work-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Pickup priorities
+    say: Which Lumière Hydra Cream pickups need attention first?
+    journey: ops-my-work-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Today’s display work
+    say: What display work is due this morning?
+    journey: ops-my-work-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: My next break
+    say: When is my next break, and what work is already assigned to me?
+    complexity: standard
+    validation_status: not_run
+  - label: My open tasks
+    say: Which of my assigned tasks are still open?
+    complexity: standard
+    validation_status: not_run
+  - label: Pickup queue
+    say: Show me the pickup orders due next at our store.
+    complexity: standard
+    validation_status: not_run
+  - label: Plan before my break
+    say: Help me sequence my assigned tasks and the nearest pickup deadlines before my break. Flag anything that
+      needs my manager’s decision.
+    complexity: complex
+    validation_status: not_run
+  - label: Pick without double counting
+    say: For the Lumière Hydra Cream pickups, explain where to pick, which orders need the units first and what
+      stock is left after their recorded reservations.
+    complexity: complex
+    validation_status: not_run
+  - label: Report an obstacle
+    say: I need to report a problem with one of my assigned tasks. Show my open tasks and ask what happened before
+      preparing any update.
+    complexity: complex
+    validation_status: not_run
+  - label: Confirm completed work
+    say: Help me close out one of my assigned tasks. First show what is open and ask which task I completed and
+      what outcome I verified.
+    complexity: complex
+    validation_status: not_run
+- id: guest-help
+  title: Help a guest
+  sign_in: associate
+  sheet_row: 3
+  situation: Find the right product and a useful availability option.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: Hydra Cream stock
+    say: Do we have the Lumière Hydra Cream in the back? A guest is asking.
+    journey: ops-guest-help-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Find the stock location
+    say: Where is the Lumière Hydra Cream backstock located?
+    journey: ops-guest-help-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Fragrance-free skincare
+    say: Find fragrance-free skincare products under $40 for a guest and check our stock.
+    journey: ops-guest-help-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Compare face creams
+    say: Compare Lumière Hydra Cream with another face cream we carry, including price and availability.
+    complexity: standard
+    validation_status: not_run
+  - label: Product reviews
+    say: What do product reviews say about Lumière Hydra Cream?
+    complexity: standard
+    validation_status: not_run
+  - label: Lower-priced option
+    say: A guest wants a lower-priced alternative to Lumière Hydra Cream. What can we offer from our store?
+    complexity: standard
+    validation_status: not_run
+  - label: Sensitive skin and budget
+    say: A guest wants fragrance-free skincare for sensitive skin under $40. Compare the suitable options using
+      available product details, reviews, price and stock.
+    complexity: complex
+    validation_status: not_run
+  - label: Available today
+    say: A guest wants Lumière Hydra Cream today. Compare our stock with a suitable lower-priced option and nearby
+      availability, without promising units already committed to pickups.
+    complexity: complex
+    validation_status: not_run
+  - label: Compare reviews and value
+    say: Compare two face creams under $40 that we have in stock. What do their product details and reviews tell
+      us about the trade-offs, and what information is missing?
+    complexity: complex
+    validation_status: not_run
+  - label: Two guest preferences
+    say: A guest wants a fragrance-free face cream and would prefer to spend under $25, but can go to $40. Which
+      in-stock options best fit, and how would you explain the choice?
+    complexity: complex
+    validation_status: not_run
+- id: my-development
+  title: My development
+  sign_in: associate
+  sheet_row: 5
+  situation: Review your own picking activity and learning options.
+  watch_for: Evidence, decisions and supported actions.
+  prompts:
+  - label: My recent picking
+    say: How did my BOPIS picking go yesterday?
+    journey: ops-my-development-1
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: My learning options
+    say: What short learning activities are available for me?
+    journey: ops-my-development-2
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Completed learning
+    say: Which BOPIS training have I already completed?
+    journey: ops-my-development-3
+    turn: 1
+    complexity: standard
+    validation_status: journey_linked
+  - label: Recent delays
+    say: What kinds of delays appear in my recent picking activity?
+    complexity: standard
+    validation_status: not_run
+  - label: Next learning step
+    say: What is one useful learning activity for me to do next?
+    complexity: standard
+    validation_status: not_run
+  - label: My coaching context
+    say: Summarize my recent picking activity and any recorded coaching notes.
+    complexity: standard
+    validation_status: not_run
+  - label: Compare my shifts
+    say: Compare my latest picking shift with the earlier period, accounting for how many orders I handled and any
+      stock-search delays.
+    complexity: complex
+    validation_status: not_run
+  - label: Practise and review
+    say: Use my recent picking activity and completed learning to suggest one thing to practise on my next shift
+      and how I could assess progress.
+    complexity: complex
+    validation_status: not_run
+  - label: Learning or process issue
+    say: Which of my recent picking difficulties could learning help with, and which might need a stock or process
+      follow-up with my manager?
+    complexity: complex
+    validation_status: not_run
+  - label: Choose a short activity
+    say: I have ten minutes available for learning. Which activity fits my recent work and completed training, and
+      what should I try afterwards?
+    complexity: complex
+    validation_status: not_run

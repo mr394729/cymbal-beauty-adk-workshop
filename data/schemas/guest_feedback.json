@@ -1,0 +1,38 @@
+[
+  {
+    "name": "feedback_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "submitted_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "rating",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "1-5"
+  },
+  {
+    "name": "topic",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "checkout_wait|associate_help|stock|store_condition|salon"
+  },
+  {
+    "name": "comment",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Synthetic text, no PII"
+  }
+]

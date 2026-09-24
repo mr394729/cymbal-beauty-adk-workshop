@@ -1,0 +1,29 @@
+# secrets and local config
+.env
+*.key.json
+client_secret*.json
+# python / uv
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+*.egg-info/
+# local test and lint caches
+.pytest_cache/
+.ruff_cache/
+# ADK local state and eval history
+.adk/
+**/.adk/
+# generated data and deployment records that carry ids
+data/out/
+deployment/deployment_info.*.json
+release.json
+# installed skill copies (source of truth is skills/)
+.agents/skills/
+.claude/skills/
+.gemini/skills/
+# editors / os
+.DS_Store
+.idea/
+.vscode/

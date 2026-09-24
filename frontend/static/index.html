@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cymbal Beauty · Store operations</title>
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/trace.js" defer></script>
+<script src="/static/reports.js" defer></script>
+<script src="/static/workspace.js" defer></script>
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<div class="stage-heading"><span>Cymbal Beauty <span class="separator">/</span> Store operations</span><button id="expand" type="button" aria-pressed="false">Expand view</button></div>
+<div class="tablet" aria-label="Tablet demonstration"><div class="camera" aria-hidden="true"></div><div class="screen">
+<div id="gate" hidden><div class="gate-card"><span class="brand-mark">c.</span><h1>Cymbal Beauty</h1><p>Enter your password to continue.</p><form id="gate-form"><label for="gate-pw">Password</label><input id="gate-pw" type="password" autocomplete="current-password" required><button class="primary" type="submit">Continue</button><p id="gate-err" role="alert"></p></form></div></div>
+<div id="app">
+<header><div class="brand"><span class="brand-mark" aria-hidden="true">c.</span><div><strong>Cymbal Beauty</strong><span>Store operations</span></div></div><div class="header-actions"><button id="notifications-open" type="button" aria-label="Store alerts" aria-haspopup="dialog" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span id="notification-count" hidden>0</span></button><label class="sr-only" for="role">Demo role</label><select id="role"><option value="manager">Dana · Store manager</option><option value="associate">Priya · Associate</option></select></div></header>
+<main>
+<aside id="rail"><button id="new-session" type="button">＋ New conversation</button><h2>Explore a scenario</h2><nav id="scenarios" aria-label="Scenarios"></nav><details class="history"><summary>Recent conversations</summary><nav id="history" aria-label="Recent conversations"></nav></details></aside>
+<section id="chat" aria-label="Conversation"><div class="conversation-heading"><div><h1 id="conversation-title">Store assistant</h1><p id="conversation-subtitle">Naperville · Saturday, October 3 · 9:00 AM</p></div><button id="activity-toggle" type="button" aria-expanded="false" aria-controls="events">Activity <span id="activity-count">0</span></button></div><div id="log" role="log" aria-label="Messages" aria-live="polite"></div><div class="compose-area"><div id="guide"></div><p id="request-error" role="alert" hidden></p><form id="form"><label class="sr-only" for="text">Message the store assistant</label><textarea id="text" rows="1" placeholder="Ask about your store…"></textarea><button id="send" class="primary" type="submit" aria-label="Send message">↑</button></form><div class="composer-note"><span id="connection">Connecting…</span><span></span></div></div></section>
+<aside id="events" hidden><div class="activity-heading"><h2>Agent activity</h2><button id="activity-close" aria-label="Close activity" type="button">×</button></div><p class="activity-help">Tool calls and results from this conversation.</p><button id="view-trace" type="button" aria-haspopup="dialog" aria-controls="trace-dialog">View trace</button><div id="stream"></div><details class="technical"><summary>Session details</summary><pre id="state"></pre><p id="target"></p></details></aside>
+</main></div></div><div class="home-indicator" aria-hidden="true"></div></div>
+<div class="stage-footer"><span>Cymbal Beauty</span><span>Built with Google Cloud · Agent Development Kit</span></div>
+<dialog id="trace-dialog" aria-labelledby="trace-title" aria-describedby="trace-description">
+  <div class="trace-heading"><div><h2 id="trace-title">ADK trace</h2><p id="trace-description">Recorded agent, model and tool execution for this turn.</p></div><button id="trace-close" type="button" aria-label="Close ADK trace" autofocus>×</button></div>
+  <p id="trace-question"></p><p id="trace-status" role="status"></p>
+  <div class="trace-columns" aria-hidden="true"><span>Operation</span><span>Elapsed from first span</span><span>Duration</span></div>
+  <div id="trace-spans"></div>
+</dialog>
+<dialog id="report-dialog" aria-labelledby="report-title">
+  <div class="trace-heading"><div><h2 id="report-title">Store records</h2><p id="report-description"></p></div><button id="report-close" type="button" aria-label="Close report">×</button></div>
+  <div class="report-controls"><label for="report-search">Find in this report<input id="report-search" type="search" placeholder="Product, category or record…"></label><button id="report-download" type="button">Download CSV</button></div>
+  <div class="report-table-wrap"><table id="report-table"></table></div>
+  <div class="report-paging"><button id="report-prev" type="button">Previous</button><span id="report-page" role="status"></span><button id="report-next" type="button">Next</button></div>
+</dialog>
+<dialog id="artifact-dialog" aria-labelledby="artifact-title">
+<div class="trace-heading"><div><h2 id="artifact-title">End-of-day report</h2></div><button id="artifact-close" type="button" aria-label="Close PDF">×</button></div>
+<iframe id="artifact-frame" title="End-of-day report PDF"></iframe>
+</dialog>
+<dialog id="notifications-dialog" aria-labelledby="notifications-title">
+<div class="trace-heading"><h2 id="notifications-title">Store alerts</h2><button id="notifications-close" type="button" aria-label="Close alerts">×</button></div>
+<button id="trigger-event" type="button">Run pickup check</button><p id="notifications-status" role="status"></p>
+<div id="notifications-list"></div>
+</dialog>
+</body></html>

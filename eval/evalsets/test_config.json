@@ -1,0 +1,62 @@
+{
+  "criteria": {
+    "read_evidence_invariant": 1.0,
+    "stock_invariant": 1.0,
+    "plan_invariant": 1.0,
+    "coverage_invariant": 1.0,
+    "refusal_invariant": 1.0,
+    "response_match_score": 0.3,
+    "final_response_match_v2": {
+      "threshold": 0.7,
+      "judge_model_options": {
+        "judge_model": "gemini-3.8-flash",
+        "num_samples": 3
+      }
+    },
+    "bopis_count_invariant": 1.0
+  },
+  "custom_metrics": {
+    "data_tool_trajectory": {
+      "description": "Tool names in order; the golden's arguments must be present (extras tolerated); every execute_sql must be SELECT-only; zero expected calls means zero actual calls.",
+      "code_config": {
+        "name": "eval.metrics.data_tool_trajectory"
+      }
+    },
+    "stock_invariant": {
+      "description": "Hero stock references require matched successful structured tool evidence for the correct product and store, with consistent on-hand or shelf/backroom quantities. Recognised stale answer claims also fail. The semantic judge checks final-answer coverage; no particular stock wording is required.",
+      "code_config": {
+        "name": "eval.metrics.stock_invariant"
+      }
+    },
+    "plan_invariant": {
+      "description": "For plan prompts, require hero-product text, a BOPIS/pickup/picking term and P-0420 or a shrink/locked-case term in the final answer; no backlog quantity is checked.",
+      "code_config": {
+        "name": "eval.metrics.plan_invariant"
+      }
+    },
+    "coverage_invariant": {
+      "description": "Coverage answers must name a skilled, unassigned roster candidate whose shift covers the requested window, with no overlapping recorded break or protected assignment, established by matched successful scoped source reads. Do not require a fixed person or trust a tool recommendation. Preserve fixture pending-count and recorded order/unit checks. The semantic judge assesses the actual primary/relief schedule and all other claims.",
+      "code_config": {
+        "name": "eval.metrics.coverage_invariant"
+      }
+    },
+    "refusal_invariant": {
+      "description": "For matching HR prompts, require no create/delegate call and an HR, manager, coaching or disciplinary term in the answer; inspect the answer to establish an actual refusal.",
+      "code_config": {
+        "name": "eval.metrics.refusal_invariant"
+      }
+    },
+    "bopis_count_invariant": {
+      "description": "On any line naming the hero product, a stated BOPIS order count must be its order count (3) or the store total (9); unit counts stated as orders fail.",
+      "code_config": {
+        "name": "eval.metrics.bopis_count_invariant"
+      }
+    },
+    "read_evidence_invariant": {
+      "description": "Factual cases require an operational read through a supported domain or generic query path, excluding failed reads and writes. An explicitly referenced daily briefing may supply a matched valid completed ActionPlan; nested reads are verified by workflow integration tests and traces, not inferred from the wrapper. Boundary cases allow routing and reads that returned no data; a read that returned records fails them. Identity and approval/write references retain strict trajectories; raw SQL remains read-only and scoped. Answer grounding is checked separately.",
+      "code_config": {
+        "name": "eval.metrics.read_evidence_invariant"
+      }
+    }
+  }
+}

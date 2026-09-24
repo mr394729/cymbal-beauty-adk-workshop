@@ -1,0 +1,51 @@
+{
+  "eval_set_id": "rag_knowledge_agent_golden",
+  "name": "rag_knowledge_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "bopis_hold_time",
+      "conversation": [
+        {
+          "invocationId": "bopis_hold_time-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "How long do we hold a BOPIS order that is ready for pick-up?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "SOP 06: a ready BOPIS order is held for 5 days, the guest gets a reminder on day 3, and after day 5 the order is cancelled and the items are returned to stock by the end of that day."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "query": "BOPIS hold time ready order"
+                },
+                "name": "policy_lookup"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "rag_knowledge_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

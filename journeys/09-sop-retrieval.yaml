@@ -1,0 +1,55 @@
+id: sop-retrieval
+title: Procedure questions — two covered, one not covered, one mixing data and procedure
+persona: dana-store-manager
+goal: >-
+  policy_lookup answers from the six store SOPs. When the SOPs do not cover something the agent must
+  say so rather than writing a plausible procedure, and it must be able to put a procedure next to
+  the store's own numbers.
+tags: [manager, retrieval, sop]
+notes: >-
+  Needs SOP_DATA_STORE set (`uv run python quickstarts/02-rag-knowledge-agent/sop_data_store.py setup`); without it policy_lookup is not registered and every turn
+  here fails on tools_any, which is the correct loud failure.
+turns:
+  - say: "How long do we hold a ready BOPIS order before it goes back to stock?"
+    note: SOP 06 — five days, reminder on day 3, back to stock by end of day 5.
+    expect:
+      tools_any: [policy_lookup]
+      regex_all: ["5 days|five days"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "Who's allowed to open the fragrance case?"
+    note: SOP 01 — the manager on duty and one trained key-holder per shift.
+    expect:
+      tools_any: [policy_lookup]
+      contains_any: ["key", "manager on duty", "key-holder", "key holder"]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "What's our procedure for a guest who wants a refund without a receipt?"
+    note: >-
+      No SOP covers returns without a receipt. The only correct answer is that the procedures do not
+      cover it; inventing a returns policy here is the worst failure in this whole suite.
+    expect:
+      tools_any: [policy_lookup]
+      refusal: true
+      regex_none: ["store credit|gift card|within \\d+ days|manager'?s discretion"]
+
+  - say: "The Noir Velvet keeps going missing. What does the SOP say I should do, and what do our own numbers say?"
+    note: >-
+      Mixes SOP 01/02 (three or more unknown-loss events in 14 days) with the shrink signals for P-0420.
+      Earlier turns already pulled those SOPs into the session, so a fresh policy_lookup is not required —
+      but the answer must carry both halves, and the shrink figures must be the real ones (6 events, $665).
+    expect:
+      tools_any: [policy_lookup, loss_prevention, get_shrink_signals]
+      contains_any: ["P-0420", "Noir Velvet"]
+      contains_all: ["SOP"]
+      regex_all: ["\\b6\\b", "665"]
+      no_tool_errors: true
+
+  - say: "Can I reset the haircare endcap this afternoon to get it out of the way?"
+    note: SOP 03 — resets are Tuesday or Wednesday, never on a Saturday, and today is Saturday.
+    expect:
+      tools_any: [policy_lookup]
+      contains_any: ["Tuesday", "Wednesday", "Saturday", "not"]
+      no_tool_errors: true

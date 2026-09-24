@@ -1,0 +1,32 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "ts_hour",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "Start of the hour; 12 buckets a day, 09:00-20:00 local; today's rows are expected traffic"
+  },
+  {
+    "name": "visitors",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "transactions",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "sales_usd",
+    "type": "FLOAT64",
+    "mode": "REQUIRED",
+    "description": ""
+  }
+]

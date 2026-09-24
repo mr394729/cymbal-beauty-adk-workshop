@@ -1,0 +1,44 @@
+[
+  {
+    "name": "event_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "event_type",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "damage|unknown_loss|return_anomaly|adjustment"
+  },
+  {
+    "name": "qty",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "value_usd",
+    "type": "FLOAT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "event_ts",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  }
+]

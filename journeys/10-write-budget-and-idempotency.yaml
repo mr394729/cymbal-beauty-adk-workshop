@@ -1,0 +1,50 @@
+id: write-budget-and-idempotency
+title: Approve the same task twice, then again four turns later
+persona: dana-store-manager
+goal: >-
+  A manager repeats herself. The write key is derived from the write itself, so the second and third
+  approval of the same task must find the original row instead of creating a duplicate, and a
+  rejected write must leave nothing behind.
+tags: [manager, write, idempotency]
+writes: true
+notes: >-
+  Run `bash data/load.sh --env dev --tables store_tasks` before and after. Turn 3 approves; turn 4 approves the identical request
+  and must come back as the same task; turn 6 asks again after other work.
+turns:
+  - say: "What's open on the Lumière Hydra Cream right now?"
+    note: The prompt tells store_tasks to check open work before creating anything.
+    expect:
+      tools_any: [get_task_status, inventory_excellence, store_tasks]
+      no_tool_errors: true
+
+  - say: "Raise a cycle count for the Hydra Cream — the shelf and the system disagree."
+    approve: false
+    note: Rejected on purpose. Nothing may be written and the agent must not retry.
+    expect:
+      confirmation: required
+      regex_all: ["not|no( |thing)|reject|cancel"]
+
+  - say: "Sorry, go ahead with that cycle count after all."
+    approve: true
+    expect:
+      tools_all: [create_store_task]
+      confirmation: required
+      regex_all: ["T-[0-9A-Za-z]{6,}"]
+
+  - say: "Raise a cycle count for the Hydra Cream — the shelf and the system disagree."
+    approve: true
+    note: The identical request again. The idempotency key must return the same task.
+    expect:
+      regex_all: ["T-[0-9A-Za-z]{6,}"]
+      contains_any: ["already", "same task", "existing", "open"]
+
+  - say: "Who's covering the floor for the next two hours?"
+    note: An unrelated turn in between, so the next repeat is not adjacent.
+    expect:
+      tools_any: [associate_orchestration]
+      no_tool_errors: true
+
+  - say: "Remind me — did the cycle count for the Hydra Cream actually get raised?"
+    expect:
+      regex_all: ["T-[0-9A-Za-z]{6,}|yes|raised|created|open"]
+      tools_none: [create_store_task]

@@ -1,0 +1,45 @@
+kind: starter
+id: ops-loss-3
+title: Loss and damage — Choose follow-up work
+persona: dana-store-manager
+goal: Connect recorded losses to practical control checks.
+tags:
+- operations-review
+- manager
+- loss
+writes: false
+turns:
+- say: What follow-up work would address the Noir Velvet control findings?
+  expect:
+    tools_all:
+    - get_loss_controls
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - latch
+    - repair|maintenan|fix
+    - reconcil|compare|match|review.{0,40}(?:movement|adjustment|return|loss|event)
+    - record|movement|adjustment|return|event
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:6|six)\s+(?:total\s+)?units?\s+(?:lost|missing|stolen)
+    - \b(?:Priya|Noor|Jordan|Maya|Taylor|Chloe)\s+(?:stole|is stealing|committed theft)
+    - \b(?:7|seven)\s+(?:(?:total|wholly|completely)\s+)?(?:unaccounted|unexplained|unknown.loss|stolen)\s+units?
+    - \b(?:7|seven)\s+units?\s+(?:are|remain|were)\s+(?:all\s+)?(?:unaccounted|unexplained|stolen)
+    - \b(?:7|seven)\s+units?\b[^.\n]{0,100}(?:have|had|are|remain|were)\s+(?:all\s+)?(?:gone\s+)?(?:missing|stolen|unaccounted|unexplained)
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

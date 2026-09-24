@@ -1,0 +1,21 @@
+# Rollback = 100 % of traffic to a named revision. Approval-gated trigger; the approver passes _REVISION.
+substitutions:
+  _NAMESPACE: ""   # the facilitator's namespace (setup_cloudbuild_triggers.sh sets it); every name carries it
+  _ENV: prod
+  _REVISION: ""
+  _ENGINE_ID: ""    # optional override; blank = the engine labelled ns=_NAMESPACE env=prod
+steps:
+  - id: return-traffic
+    name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    entrypoint: bash
+    env: ["GOOGLE_CLOUD_PROJECT=$PROJECT_ID", "WORKSHOP_NAMESPACE=${_NAMESPACE}", "AGENT_ENGINE_ID=${_ENGINE_ID}"]
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        test -n "${_REVISION}" || { echo "_REVISION (full revision name) is required"; exit 1; }
+        uv sync --locked
+        uv run python deployment/traffic.py rollback --env ${_ENV} --to "${_REVISION}"
+options:
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY

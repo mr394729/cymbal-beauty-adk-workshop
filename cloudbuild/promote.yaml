@@ -1,0 +1,24 @@
+# Shift prod traffic to a named candidate revision (canary, then 100 %). Approval-gated trigger; the approver
+# passes the revision printed by the prod-canary build as _REVISION.
+substitutions:
+  _NAMESPACE: ""   # the facilitator's namespace (setup_cloudbuild_triggers.sh sets it); every name carries it
+  _ENV: prod
+  _PERCENT: "10"
+  _REVISION: ""
+  _ENGINE_ID: ""    # optional override; blank = the engine labelled ns=_NAMESPACE env=prod
+steps:
+  - id: smoke-and-shift-traffic
+    name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    entrypoint: bash
+    env: ["GOOGLE_CLOUD_PROJECT=$PROJECT_ID", "WORKSHOP_NAMESPACE=${_NAMESPACE}", "AGENT_ENGINE_ID=${_ENGINE_ID}", "GOOGLE_GENAI_USE_VERTEXAI=TRUE", "GOOGLE_CLOUD_LOCATION=global"]
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        test -n "${_REVISION}" || { echo "_REVISION (full revision name) is required"; exit 1; }
+        uv sync --locked
+        uv run python deployment/smoke.py --env ${_ENV} --revision "${_REVISION}"
+        uv run python deployment/traffic.py promote --env ${_ENV} --percent ${_PERCENT} --revision "${_REVISION}"
+options:
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY

@@ -1,0 +1,55 @@
+{
+  "eval_set_id": "data_analyst_agent_golden",
+  "name": "data_analyst_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "shrink_value_by_category",
+      "conversation": [
+        {
+          "invocationId": "shrink_value_by_category-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "Which product category has the highest total shrink value across all stores?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Skincare has the highest total shrink value across all stores: $21,973.45. SQL: SELECT p.category, SUM(s.value_usd) AS shrink_value FROM shrink_events s JOIN products p ON s.product_id = p.product_id GROUP BY p.category ORDER BY shrink_value DESC LIMIT 1"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "table_id": "shrink_events"
+                },
+                "name": "get_table_info"
+              },
+              {
+                "args": {},
+                "name": "execute_sql"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "data_analyst_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

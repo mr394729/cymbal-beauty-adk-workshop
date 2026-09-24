@@ -1,0 +1,68 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "e.g. S-014"
+  },
+  {
+    "name": "name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "city",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "state",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "zip",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "has_salon",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "has_brow_bar",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "opens",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "HH:MM local"
+  },
+  {
+    "name": "closes",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "lat",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "lng",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": ""
+  }
+]

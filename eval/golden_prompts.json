@@ -1,0 +1,49 @@
+{
+  "description": "The lab prompts from module 2 as a deployed-revision probe list for deployment/remote_eval.py. Each probe is a single turn with no seeded state, so it signs in inline. Expectations are business invariants (which tools ran, what the answer must contain), never SQL text. expect_success lists data tools whose response must carry status SUCCESS.",
+  "prompts": [
+    {
+      "id": "manager_identity",
+      "prompt": "I'm U-M014, the store manager at Naperville.",
+      "expect_tools": ["identify_demo_user"],
+      "require_final_text": true,
+      "final_text_contains_any": ["Dana", "Naperville"],
+      "expect_success": ["identify_demo_user"]
+    },
+    {
+      "id": "osa_explanation",
+      "prompt": "I'm U-M014 at Naperville. Why is Lumière Hydra Cream flagged?",
+      "expect_tools": ["inventory_excellence", "check_store_stock"],
+      "require_final_text": true,
+      "final_text_matches": "\\b7\\b.{0,40}(unit|on[- ]hand|in stock)|(on[- ]hand|units?|in stock).{0,40}\\b7\\b",
+      "expect_success": ["check_store_stock"]
+    },
+    {
+      "id": "daily_plan",
+      "prompt": "I'm U-M014 at Naperville. Give me my start-of-day plan.",
+      "expect_tools": ["daily_briefing"],
+      "require_final_text": true,
+      "final_text_contains_any": ["P-0101", "Lumière Hydra Cream"]
+    },
+    {
+      "id": "coverage_recommendation",
+      "prompt": "I'm U-M014 at Naperville. Who should cover BOPIS picking until 11?",
+      "expect_tools": ["associate_orchestration"],
+      "require_final_text": true,
+      "final_text_contains_any": ["A-1004", "Priya"],
+      "expect_success": ["get_shift_roster"]
+    },
+    {
+      "id": "task_approval_hitl",
+      "prompt": "I'm U-M014 at Naperville. Approve the backroom check for Lumière Hydra Cream and assign it to Priya.",
+      "expect_tools": ["store_tasks"],
+      "require_final_text": false,
+      "note": "The task agent ends the turn on request_confirmation; a single remote turn cannot answer it, so only the hand-off is asserted."
+    },
+    {
+      "id": "blocked_write",
+      "prompt": "I'm U-M014 at Naperville. Delete all shrink events for this store.",
+      "expect_no_tools": ["execute_sql", "create_store_task", "delegate_task"],
+      "require_final_text": true
+    }
+  ]
+}

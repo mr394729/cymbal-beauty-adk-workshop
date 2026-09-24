@@ -1,0 +1,110 @@
+substitutions:
+  _NAMESPACE: ''
+  _EVAL_NAMESPACE: ''
+  _BASE_REF: main
+  _REPO_RESOURCE: ''
+  _RISK_EVENT: pr
+  _PREVIOUS_SHA: ''
+steps:
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: sync
+    entrypoint: bash
+    args:
+      - -c
+      - uv sync --locked --all-extras
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: lint-unit
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        bash installation_scripts/install_report_browser.sh
+        uv run ruff check .
+        uv run python scripts/check_skills.py
+        uv run python scripts/check_docs.py
+        uv run pytest tests/unit -q --junitxml=build/ci-unit.xml
+    env:
+      - RUN_PDF_RENDER_TESTS=1
+      - PLAYWRIGHT_BROWSERS_PATH=/opt/cymbal-browsers
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: change-risk
+    allowFailure: true  # final risk-gate enforces this result after independent evaluations finish
+    entrypoint: bash
+    env:
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_LOCATION=global
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        mkdir -p build
+        trap 'code=$$?; trap - EXIT; set +e; printf "%s\n" "$$code" > build/change-risk.exit; uv run python deployment/iam/upload_ci_evidence.py --project "$PROJECT_ID" --build-id "$BUILD_ID" --phase risk --exit-code "$$code"; exit "$$code"' EXIT
+        # what this change could do to the agent's behaviour, before anyone promotes it: code classifies the paths,
+        # a model reads the diff. A high rating fails the check so the change gets a human review by exception.
+        if [ -f .ci-source/manifest.json ]; then
+          uv run python deployment/change_risk.py --snapshot .ci-source/manifest.json --target preprod --fail-on high
+        else
+          apt-get update -qq
+          apt-get install -y --no-install-recommends git ca-certificates
+          uv run python deployment/iam/prepare_risk_base.py --repository "${_REPO_RESOURCE}" --base-ref "${_BASE_REF}" --event "${_RISK_EVENT}" --previous-sha "${_PREVIOUS_SHA}"
+          base=$$(uv run python -c 'import json; print(json.load(open("build/risk-base.json"))["base"])')
+          head=$$(uv run python -c 'import json; print(json.load(open("build/risk-base.json"))["head"])')
+          uv run python deployment/change_risk.py --base "$$base" --head "$$head" --target preprod --fail-on high
+        fi
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: eval-gate
+    waitFor: [lint-unit]
+    entrypoint: bash
+    env:
+      - GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+      - GOOGLE_GENAI_USE_VERTEXAI=TRUE
+      - GOOGLE_CLOUD_LOCATION=global
+      - STORE_OPS_ENV=dev
+      - EVAL_NUM_RUNS=2
+      - SOP_DATA_STORE=
+      - MEMORY_BANK_ENGINE=
+      - CYMBAL_MCP_URL=
+      - CYMBAL_MCP_AUDIENCE=
+      - CYMBAL_MCP_CALLER_SERVICE_ACCOUNT=
+      - CYMBAL_MCP_SCOPE_SECRET=
+      - CYMBAL_MCP_SCOPE_KEY=
+      - MODEL_ARMOR_TEMPLATE=
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        trap 'code=$$?; trap - EXIT; set +e; uv run python deployment/iam/upload_ci_evidence.py --project "$PROJECT_ID" --build-id "$BUILD_ID" --phase eval --exit-code "$$code"; exit "$$code"' EXIT
+        export WORKSHOP_NAMESPACE="${_EVAL_NAMESPACE}"
+        if [ -z "$$WORKSHOP_NAMESPACE" ]; then export WORKSHOP_NAMESPACE="${_NAMESPACE}"; fi
+        uv run python eval/build_eval_set.py
+        uv run pytest tests/eval -q -p no:cacheprovider --junitxml=build/ci-eval.xml
+  - name: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+    id: risk-gate
+    waitFor: [change-risk, eval-gate]
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        test -f build/change-risk.exit
+        status=$$(cat build/change-risk.exit)
+        if [ "$$status" != 0 ]; then
+          echo "Change-risk review requires attention; promotion risk gate remains failed."
+          exit "$$status"
+        fi
+
+options:
+  substitution_option: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+timeout: 1800s
+artifacts:
+  objects:
+    location: gs://$PROJECT_ID-cymbal-store-ops-staging/ci/$BUILD_ID/
+    paths:
+      - build/ci-unit.xml
+      - build/change-risk.md
+      - build/change-risk.json
+      - build/ci-eval.xml

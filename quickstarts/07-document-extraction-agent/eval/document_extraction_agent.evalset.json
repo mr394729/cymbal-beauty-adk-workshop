@@ -1,0 +1,89 @@
+{
+  "eval_set_id": "document_extraction_agent_golden",
+  "name": "document_extraction_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "promo_proof_three_discrepancies",
+      "conversation": [
+        {
+          "invocationId": "promo_proof_three_discrepancies-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "Check the promotion signage proof I attached against this week's plan."
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "3 discrepancies. Line 1 P-0101 Lumière Hydra Cream: the proof says $24.99, the plan says $22.99. Line 3 P-0141 Hydra Moisturizer: the proof ends 2026-10-17, the plan ends 2026-10-10. Line 4 P-0333 Glow Body Wash: the proof says $25.00, the plan has no promotion this week."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {},
+                "name": "exit_loop"
+              },
+              {
+                "args": {},
+                "name": "compare_promo_proof"
+              }
+            ],
+            "toolResponses": [
+              {
+                "name": "compare_promo_proof",
+                "response": {
+                  "status": "SUCCESS",
+                  "discrepancy_count": 3,
+                  "checked_lines": 5,
+                  "rows": [
+                    {
+                      "line": 1,
+                      "product_id": "P-0101",
+                      "product_name": "Lumière Hydra Cream",
+                      "issue": "price_mismatch",
+                      "proof": "$24.99",
+                      "plan": "$22.99"
+                    },
+                    {
+                      "line": 3,
+                      "product_id": "P-0141",
+                      "product_name": "Hydra Moisturizer",
+                      "issue": "end_date_mismatch",
+                      "proof": "2026-10-17",
+                      "plan": "2026-10-10"
+                    },
+                    {
+                      "line": 4,
+                      "product_id": "P-0333",
+                      "product_name": "Glow Body Wash",
+                      "issue": "not_on_promotion",
+                      "proof": "$25.00",
+                      "plan": "no promotion this week"
+                    }
+                  ]
+                }
+              }
+            ],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "document_extraction_agent",
+        "userId": "eval-user",
+        "sessionId": "promo-proof-golden",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

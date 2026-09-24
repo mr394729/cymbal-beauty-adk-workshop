@@ -1,0 +1,56 @@
+{
+  "eval_set_id": "ambient_event_agent_golden",
+  "name": "ambient_event_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "osa_exception_event",
+      "conversation": [
+        {
+          "invocationId": "osa_exception_event-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "{\"event_type\": \"osa_exception\", \"store_id\": \"S-014\", \"product_name\": \"Lumière Hydra Cream\", \"detected_at\": \"2026-10-03T08:55:00-05:00\"}"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Published a backroom_check recommendation for Lumière Hydra Cream (P-0101) at store S-014 for the manager to approve: 0 on the shelf, 7 in the backroom, 7 on hand."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream",
+                  "store_id": "S-014"
+                },
+                "name": "check_store_stock"
+              },
+              {
+                "args": {},
+                "name": "publish_message"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "ambient_event_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

@@ -1,0 +1,40 @@
+kind: starter
+id: ops-guest-help-2
+title: Help a guest — Find the stock location
+persona: priya-associate
+goal: Find the right product and a useful availability option.
+tags:
+- operations-review
+- associate
+- guest-help
+writes: false
+turns:
+- say: Where is the Lumière Hydra Cream backstock located?
+  expect:
+    tools_all:
+    - check_store_stock
+    - get_stock_location
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    - get_loss_controls
+    - get_coaching_signals
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - B[- ]?2\b
+    - back(?:room|stock)|skincare
+    state_has:
+      user:role: associate
+      user:user_id: A-1004
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

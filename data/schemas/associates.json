@@ -1,0 +1,50 @@
+[
+  {
+    "name": "associate_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "A-1004 (associates and district managers) or U-M014 (store managers)"
+  },
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Home store"
+  },
+  {
+    "name": "first_name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "role",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "associate|store_manager|district_manager"
+  },
+  {
+    "name": "skills",
+    "type": "STRING",
+    "mode": "REPEATED",
+    "description": "Subset of bopis,skincare,fragrance,makeup,haircare,cash_wrap,backroom"
+  },
+  {
+    "name": "shift_start",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": "Today's shift"
+  },
+  {
+    "name": "shift_end",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "current_task",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "What the associate is doing right now; NULL = free"
+  }
+]

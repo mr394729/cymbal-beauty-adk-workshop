@@ -1,0 +1,56 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "on_hand",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "System count = on_shelf_qty + backroom_qty"
+  },
+  {
+    "name": "on_shelf_qty",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "Units on the sales floor"
+  },
+  {
+    "name": "backroom_qty",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "Units in the backroom"
+  },
+  {
+    "name": "reorder_point",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "Replenish when on_hand falls below this"
+  },
+  {
+    "name": "shelf_capacity",
+    "type": "INT64",
+    "mode": "REQUIRED",
+    "description": "Planogram facings x depth"
+  },
+  {
+    "name": "bopis_eligible",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": "Buy online, pick up in store"
+  },
+  {
+    "name": "updated_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  }
+]

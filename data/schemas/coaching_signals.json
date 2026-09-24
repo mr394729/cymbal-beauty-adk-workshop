@@ -1,0 +1,26 @@
+[
+  {
+    "name": "associate_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "period",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "ISO week, e.g. 2026-W39"
+  },
+  {
+    "name": "metric",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "bopis_pick_rate|cycle_count_accuracy|guest_rating|task_completion"
+  },
+  {
+    "name": "value",
+    "type": "FLOAT64",
+    "mode": "REQUIRED",
+    "description": ""
+  }
+]

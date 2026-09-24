@@ -1,0 +1,54 @@
+{
+  "eval_set_id": "pickup_counts",
+  "name": "Pickup feed integrity",
+  "eval_cases": [
+    {
+      "eval_id": "pickup_counts",
+      "conversation": [
+        {
+          "invocation_id": "inv-pickup_counts",
+          "user_content": {
+            "parts": [
+              {
+                "text": "How many pickup orders are currently pending in my store, and how many units do they contain?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "There are 9 pending pickup orders containing 13 units."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {},
+                "name": "get_bopis_demand"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 0.0
+        }
+      ],
+      "session_input": {
+        "app_name": "cymbal_store_ops",
+        "user_id": "eval_user",
+        "state": {
+          "user:user_id": "U-M014",
+          "user:store_id": "S-014",
+          "user:role": "store_manager",
+          "user:first_name": "Dana"
+        }
+      },
+      "creation_timestamp": 0.0,
+      "final_session_state": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

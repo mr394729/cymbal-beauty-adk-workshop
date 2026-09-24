@@ -1,0 +1,51 @@
+{
+  "eval_set_id": "external_api_agent_golden",
+  "name": "external_api_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "bopis_order_status",
+      "conversation": [
+        {
+          "invocationId": "bopis_order_status-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "What's the status of BOPIS order BO-000651?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "BOPIS order BO-000651 at Cymbal Beauty Naperville is pending: 1 Lumière Hydra Cream, promised for pick-up at 09:30 on 2026-10-03."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "order_id": "BO-000651"
+                },
+                "name": "get_order"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "external_api_agent",
+        "userId": "eval-user",
+        "state": {}
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

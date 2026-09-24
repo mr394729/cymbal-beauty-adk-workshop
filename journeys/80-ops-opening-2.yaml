@@ -1,0 +1,40 @@
+kind: starter
+id: ops-opening-2
+title: Opening priorities — Display work
+persona: dana-store-manager
+goal: Choose the work that needs attention first.
+tags:
+- operations-review
+- manager
+- opening
+writes: false
+turns:
+- say: What display or price-label work is due this morning?
+  expect:
+    tools_all:
+    - get_merchandising_work
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - hydrat|skincare
+    - 10(?::00|\s*a\.?m\.?)?\b
+    - pickups?|BOPIS|allocat
+    - price|label
+    - noon|12(?::00|\s*p\.?m\.?)?\b
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

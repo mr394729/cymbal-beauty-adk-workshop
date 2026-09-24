@@ -1,0 +1,19 @@
+{
+  "criteria": {
+    "tool_trajectory_avg_score": {
+      "threshold": 1.0,
+      "match_type": "IN_ORDER",
+      "ignore_args": true
+    },
+    "response_match_score": 0.3,
+    "discrepancy_invariant": 1.0
+  },
+  "custom_metrics": {
+    "discrepancy_invariant": {
+      "description": "compare_promo_proof returned exactly the golden's (product, issue) pairs and the report names each product.",
+      "code_config": {
+        "name": "07-document-extraction-agent.metrics.discrepancy_invariant"
+      }
+    }
+  }
+}

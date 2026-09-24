@@ -1,0 +1,44 @@
+kind: starter
+id: ops-development-3
+title: Associate development — Review Noor’s progress
+persona: dana-store-manager
+goal: Choose support based on recent work and completed learning.
+tags:
+- operations-review
+- manager
+- development
+writes: false
+turns:
+- say: What should I review on Noor’s next picking shift after the stock-location walkthrough?
+  expect:
+    tools_all:
+    - get_coaching_context
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - (?:(?:\b(?:5|five)\b).{0,100}(?:picks?|lines?)|(?:picks?|lines?).{0,100}(?:\b(?:5|five)\b))
+    - search|location
+    - interrupt
+    - 8.{0,15}min|eight.{0,15}min|within.target|on.time
+    - \A(?!.*\b(?:7|seven)\b).+\Z|\b(?:23|twenty.three|rate|rates|proportion|proportions|percentage|percent)\b
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:0\.52|52\s*%).{0,30}(?:orders?\s*(?:per|/)|picks?\s*(?:per|/))
+  note: A five-pick follow-up must not compare its raw search-delay count against seven flags in a 23-pick
+    baseline. If naming seven, preserve the denominator or explicitly compare rates/proportions.
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

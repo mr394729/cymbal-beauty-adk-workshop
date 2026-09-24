@@ -1,0 +1,46 @@
+id: empty-results
+title: Nothing found — a clean product, a quiet window, a task list that is empty
+persona: dana-store-manager
+goal: >-
+  An empty tool result must read as "nothing on file", never as a problem, and never be padded with
+  an invented example.
+tags: [manager, empty, honesty]
+notes: >-
+  P-0101 has no shrink events at S-014; the fixture shrink sits on P-0420. Cancelled tasks are a
+  single row (T-00135). Both are genuinely empty or near-empty paths.
+turns:
+  - say: "Any shrink on the Lumière Hydra Cream?"
+    note: There is none. The answer must say so plainly.
+    expect:
+      tools_any: [loss_prevention, get_shrink_signals]
+      regex_all: ["no |none|zero|0\\b|nothing"]
+      regex_none: ["[1-9]\\d* (shrink )?events? (for|on|involving|against) (the )?Lum"]
+      no_tool_errors: true
+
+  - say: "What about the Noir Velvet?"
+    note: >-
+      The contrast — this one does have a pattern, so the previous "none" must have been real.
+    expect:
+      tools_any: [loss_prevention, get_shrink_signals]
+      regex_all: ["\\b6\\b", "665"]
+      contains_any: ["investigate", "locked", "case", "monitor"]
+
+  - say: "Show me the cancelled tasks."
+    expect:
+      contains_any: ["T-00135"]
+      not_contains: ["T-00137", "T-00138", "T-00139", "T-00140"]
+      no_tool_errors: true
+
+  - say: "Any guest feedback about the salon this week?"
+    note: >-
+      Feedback exists but the topics are fixed; if there is nothing on the salon the answer must say
+      so rather than reading a complaint into another topic.
+    expect:
+      tools_any: [get_guest_feedback, daily_briefing, associate_orchestration]
+      refusal: false
+
+  - say: "So is there anything I don't need to worry about today?"
+    note: A summary over the empty results — it must not quietly turn "none" into "fine, probably".
+    expect:
+      regex_all: ["\\w"]
+      refusal: false

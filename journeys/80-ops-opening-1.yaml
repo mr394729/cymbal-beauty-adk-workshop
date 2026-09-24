@@ -1,0 +1,42 @@
+kind: starter
+id: ops-opening-1
+title: Opening priorities — Opening plan
+persona: dana-store-manager
+goal: Choose the work that needs attention first.
+tags:
+- operations-review
+- manager
+- opening
+writes: false
+turns:
+- say: Morning. Just opened up — what should I be on top of first?
+  expect:
+    tools_all:
+    - daily_briefing
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,219}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - Hydra
+    - (?:(?:\b(?:3|three)\b).{0,100}(?:orders?)|(?:orders?).{0,100}(?:\b(?:3|three)\b))
+    - (?:(?:\b(?:4|four)\b).{0,100}(?:units?)|(?:units?).{0,100}(?:\b(?:4|four)\b))
+    - Priya|Jordan
+    - 9[:.]30|09[:.]30|nine.thirty
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:7|seven)\s+units?\b[^.\n]{0,100}(?:have|had|are|remain|were)\s+(?:all\s+)?(?:gone\s+)?(?:missing|stolen|unaccounted|unexplained)
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

@@ -1,0 +1,40 @@
+kind: starter
+id: ops-inventory-3
+title: Shelf availability — Incoming Hydra stock
+persona: dana-store-manager
+goal: Recover shelf gaps and protect pickup commitments.
+tags:
+- operations-review
+- manager
+- inventory
+writes: false
+turns:
+- say: When is the Lumière Hydra Cream replenishment expected, and what should we do meanwhile?
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - delay|overdue|late
+    - (?:(?:\b(?:12|twelve)\b).{0,100}(?:units?|shipment|delivery)|(?:units?|shipment|delivery).{0,100}(?:\b(?:12|twelve)\b))
+    - pickups?|BOPIS|orders?
+    - back(?:room|stock)|B[- ]?2
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    tools_any:
+    - get_inventory_context
+    - get_replenishment_status
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

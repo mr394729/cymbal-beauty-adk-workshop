@@ -1,0 +1,44 @@
+kind: starter
+id: ops-my-development-1
+title: My development — My recent picking
+persona: priya-associate
+goal: Review your own picking activity and learning options.
+tags:
+- operations-review
+- associate
+- my-development
+writes: false
+turns:
+- say: How did my BOPIS picking go yesterday?
+  expect:
+    tools_all:
+    - get_coaching_context
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    - Noor
+    - A-1007
+    - 52%
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    - get_loss_controls
+    - get_coaching_signals
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - (?:(?:\b(?:26|twenty.six)\b).{0,100}(?:picks?|lines?|completed)|(?:picks?|lines?|completed).{0,100}(?:\b(?:26|twenty.six)\b))
+    - (?:(?:\b(?:24|twenty.four)\b).{0,100}(?:8|eight|target)|(?:8|eight|target).{0,100}(?:\b(?:24|twenty.four)\b))
+    - 6[.,]5|six.and.a.half
+    - yesterday|October\s*2|Oct\.?\s*2|2\s*Oct
+    state_has:
+      user:role: associate
+      user:user_id: A-1004
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

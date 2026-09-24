@@ -1,0 +1,20 @@
+# REFERENCE ONLY (see deploy.yml). Rollback is a traffic edit, not a build.
+name: rollback-prod (reference)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    env: { GOOGLE_CLOUD_PROJECT: "${{ vars.GCP_PROJECT_ID }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_DEPLOYER_PROD_SA }}
+      - run: uv run python deployment/traffic.py rollback --env prod

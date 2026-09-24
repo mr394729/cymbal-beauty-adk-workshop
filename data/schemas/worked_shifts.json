@@ -1,0 +1,37 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "business_date",
+    "type": "DATE",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "associate_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "clock_in",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "clock_out",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "unpaid_break_minutes",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "paid_minutes",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  }
+]

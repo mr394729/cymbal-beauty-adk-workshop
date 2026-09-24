@@ -1,0 +1,63 @@
+{
+  "eval_set_id": "memory_agent_golden",
+  "name": "memory_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "remember_huddle_preferences",
+      "conversation": [
+        {
+          "invocationId": "remember_huddle_preferences-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "My huddle is at 8:45 and I always want the BOPIS backlog covered first. What should I tell the team this morning?"
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "I saved your 08:45 huddle with the BOPIS backlog covered first. There are 9 pending BOPIS orders promised in the next 4 hours, and store traffic rises to a peak of 88 visitors in the third hour."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "huddle_time": "08:45",
+                  "focus_areas": [
+                    "bopis"
+                  ]
+                },
+                "name": "remember_preferences"
+              },
+              {
+                "args": {},
+                "name": "get_traffic_and_backlog"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "memory_agent",
+        "userId": "eval-user",
+        "state": {
+          "user:user_id": "U-M014",
+          "user:store_id": "S-014",
+          "user:role": "store_manager",
+          "user:first_name": "Dana"
+        }
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

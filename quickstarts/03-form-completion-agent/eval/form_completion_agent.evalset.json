@@ -1,0 +1,113 @@
+{
+  "eval_set_id": "form_completion_agent_golden",
+  "name": "form_completion_agent golden",
+  "eval_cases": [
+    {
+      "evalId": "asks_for_missing_quantity",
+      "conversation": [
+        {
+          "invocationId": "asks_for_missing_quantity-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "Log damage for Lumière Hydra Cream in the skincare aisle: the jars were crushed in a delivery tote."
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "How many units of Lumière Hydra Cream were damaged?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream"
+                },
+                "name": "find_product"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "form_completion_agent",
+        "userId": "eval-user",
+        "state": {
+          "user:user_id": "A-1004",
+          "user:store_id": "S-014",
+          "user:role": "associate",
+          "user:first_name": "Priya"
+        }
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    },
+    {
+      "evalId": "complete_report_waits_for_confirmation",
+      "conversation": [
+        {
+          "invocationId": "complete_report_waits_for_confirmation-1",
+          "userContent": {
+            "parts": [
+              {
+                "text": "Log a damage report: 2 jars of Lumière Hydra Cream cracked when a tote fell in the skincare aisle during restock."
+              }
+            ],
+            "role": "user"
+          },
+          "finalResponse": {
+            "parts": [
+              {
+                "text": "Please confirm the damage report for 2 units of Lumière Hydra Cream in the skincare aisle."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediateData": {
+            "toolUses": [
+              {
+                "args": {
+                  "product_name": "Lumière Hydra Cream"
+                },
+                "name": "find_product"
+              },
+              {
+                "args": {
+                  "product_id": "P-0101",
+                  "quantity": 2,
+                  "event_type": "damage"
+                },
+                "name": "submit_incident_report"
+              }
+            ],
+            "toolResponses": [],
+            "intermediateResponses": []
+          },
+          "creationTimestamp": 0.0
+        }
+      ],
+      "sessionInput": {
+        "appName": "form_completion_agent",
+        "userId": "eval-user",
+        "state": {
+          "user:user_id": "A-1004",
+          "user:store_id": "S-014",
+          "user:role": "associate",
+          "user:first_name": "Priya"
+        }
+      },
+      "creationTimestamp": 0.0,
+      "finalSessionState": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

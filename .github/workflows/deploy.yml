@@ -1,0 +1,36 @@
+# REFERENCE ONLY. The live promotion ladder runs in Cloud Build (cloudbuild/) with approval-gated triggers.
+# GitHub Environments with required reviewers need GitHub Enterprise on a private repository, so this
+# workflow is workflow_dispatch-only and deploys dev only.
+name: deploy-dev (reference)
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Only dev is allowed from this workflow"
+        default: dev
+        type: choice
+        options: [dev]
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_CLOUD_PROJECT: ${{ vars.GCP_PROJECT_ID }}
+      GOOGLE_GENAI_USE_VERTEXAI: "TRUE"
+      GOOGLE_CLOUD_LOCATION: global
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with: { enable-cache: true }
+      - run: uv sync --locked --all-extras
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.WIF_DEPLOYER_DEV_SA }}
+      - run: uv run python deployment/release.py
+      - run: uv run python deployment/deploy.py --env dev --release release.json
+      - run: uv run python deployment/smoke.py --env dev
+      - uses: actions/upload-artifact@v4
+        with: { name: release, path: "release.json" }

@@ -1,0 +1,44 @@
+kind: starter
+id: ops-my-development-2
+title: My development — My learning options
+persona: priya-associate
+goal: Review your own picking activity and learning options.
+tags:
+- operations-review
+- associate
+- my-development
+writes: false
+turns:
+- say: What short learning activities are available for me?
+  expect:
+    tools_all:
+    - get_learning_options
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    - Noor
+    - A-1007
+    - 52%
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    - get_loss_controls
+    - get_coaching_signals
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - stock.{0,30}location|location.{0,30}stock|backstock
+    - (?:(?:\b(?:8|eight)\b).{0,100}(?:min)|(?:min).{0,100}(?:\b(?:8|eight)\b))
+    - stag
+    - (?:(?:\b(?:6|six)\b).{0,100}(?:min)|(?:min).{0,100}(?:\b(?:6|six)\b))
+    state_has:
+      user:role: associate
+      user:user_id: A-1004
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

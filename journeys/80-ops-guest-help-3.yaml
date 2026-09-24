@@ -1,0 +1,43 @@
+kind: starter
+id: ops-guest-help-3
+title: Help a guest — Fragrance-free skincare
+persona: priya-associate
+goal: Find the right product and a useful availability option.
+tags:
+- operations-review
+- associate
+- guest-help
+writes: false
+turns:
+- say: Find fragrance-free skincare products under $40 for a guest and check our stock.
+  expect:
+    tools_all:
+    - get_guest_product_options
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    - get_loss_controls
+    - get_coaching_signals
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - fragrance.free
+    - Hydra Moisturizer.{0,100}\$12\b|\$12\b.{0,100}Hydra Moisturizer|Pure Sunscreen.{0,100}\$24\b|\$24\b.{0,100}Pure
+      Sunscreen|Hydra Cream.{0,100}\$28\b|\$28\b.{0,100}Hydra Cream
+    - shel(?:f|ves)|back(?:room|stock)|on.hand|stock.{0,25}\d|\d.{0,25}stock
+    - \A(?!.*Hydra Moisturizer).+\Z|Hydra Moisturizer.{0,120}(?:\b(?:9|nine)\b.{0,20}shelf|shelf.{0,20}\b(?:9|nine)\b|\b(?:11|eleven)\b.{0,20}(?:hand|stock|total)|(?:hand|stock|total).{0,20}\b(?:11|eleven)\b)
+    - \A(?!.*Pure Sunscreen).+\Z|Pure Sunscreen.{0,120}(?:\b(?:6|six)\b.{0,20}shelf|shelf.{0,20}\b(?:6|six)\b|\b(?:8|eight)\b.{0,20}(?:hand|stock|total)|(?:hand|stock|total).{0,20}\b(?:8|eight)\b)
+    state_has:
+      user:role: associate
+      user:user_id: A-1004
+      user:store_id: S-014
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

@@ -1,0 +1,52 @@
+# The agent's end users. Each persona is one signed-in device: the runner seeds
+# `user:user_id`, `user:store_id`, `user:role` and `user:first_name` into session state before the
+# first turn, exactly as an authenticated app would. Identity is never taken from the conversation,
+# so a persona cannot talk its way into another store or role.
+#
+# Every id here exists in the generated dataset (data/generate.py) and is checked by
+# tests/unit/test_journeys.py, so these personas stay true on every attendee's project.
+personas:
+  dana-store-manager:
+    name: Dana
+    role: store_manager
+    associate_id: U-M014
+    store_id: S-014
+    description: >-
+      Store manager at Cymbal Beauty Naperville (S-014). Opens the store on Saturday, runs the floor
+      from a handheld, and is the only persona who can approve a task. Talks in shorthand and expects
+      numbers she can act on in under a minute.
+
+  priya-associate:
+    name: Priya
+    role: associate
+    associate_id: A-1004
+    store_id: S-014
+    description: >-
+      Beauty advisor at S-014 with BOPIS and skincare skills, on shift 09:00-13:00 local. Asks about
+      stock and procedure between guests. Can read her own development and complete her own tasks. Must not read a colleague's coaching or
+      reach another store.
+
+  elena-district-manager:
+    name: Elena
+    role: district_manager
+    associate_id: A-1001
+    store_id: S-014
+    description: >-
+      District manager whose home store is S-014. The only persona allowed to look at another store by
+      id. Compares stores, follows up on exceptions, and pushes work down to the store managers.
+
+  imani-second-store-manager:
+    name: Imani
+    role: store_manager
+    associate_id: U-M021
+    store_id: S-021
+    description: >-
+      Store manager at Cymbal Beauty Dallas (S-021). Proves that the store scope is data, not prompt
+      wording: the same questions Dana asks must answer for S-021, and S-014 must be refused.
+
+  scheduler-no-sign-in:
+    signed_in: false
+    name: Morning scheduler
+    description: >-
+      A calling system (a shift-start job, a kiosk before anyone badges in) with no signed-in user.
+      Every store-scoped tool must refuse with the sign-in hint instead of guessing a store.

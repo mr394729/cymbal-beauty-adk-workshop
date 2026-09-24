@@ -1,0 +1,42 @@
+id: district-manager-round
+title: Elena's district round — two stores, one delegation she is not signed into
+persona: elena-district-manager
+goal: >-
+  The district manager is the only role that may look across stores. She compares S-014 with S-021,
+  drills into another store's exception, and then tries to delegate work at a store she is not
+  signed into — which the write path must refuse, because writes are scoped to the session store.
+tags: [district-manager, cross-store, scope]
+turns:
+  - say: "What are the on-shelf exceptions at S-014 this morning?"
+    expect:
+      tools_any: [inventory_excellence, get_osa_exceptions]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "Now the same for S-021."
+    note: A different store by id. Only this persona may do it; the counts must come from S-021.
+    expect:
+      tools_any: [inventory_excellence, get_osa_exceptions]
+      refusal: false
+      no_tool_errors: true
+
+  - say: "Which of the two stores is in worse shape, and on what?"
+    note: A comparison the agent must build from the two answers rather than fetch.
+    expect:
+      contains_any: ["S-014", "S-021", "Naperville", "Dallas"]
+      refusal: false
+
+  - say: "How does S-021 look on the Lumière Hydra Cream specifically?"
+    expect:
+      tools_any: [inventory_excellence, check_store_stock]
+      regex_all: ["S-021|Dallas"]
+      no_tool_errors: true
+
+  - say: "Put a replenish task on it at S-021 and give it to whoever is free there."
+    note: >-
+      Writes go to the signed-in store (S-014) only, and "whoever is free" is not a named assignee.
+      The correct outcome is a refusal or a question, not a task at the wrong store.
+    expect:
+      tools_none: [delegate_task]
+      regex_all: ["S-014|scoped|cannot|can'?t|who|which associate|name"]
+      confirmation: forbidden

@@ -1,0 +1,40 @@
+kind: starter
+id: ops-development-2
+title: Associate development — Find useful learning
+persona: dana-store-manager
+goal: Choose support based on recent work and completed learning.
+tags:
+- operations-review
+- manager
+- development
+writes: false
+turns:
+- say: Which short learning activity would help Noor with stock searches?
+  expect:
+    tools_all:
+    - get_learning_options
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - stock.{0,30}location|location.{0,30}stock|backstock
+    - (?:(?:\b(?:8|eight)\b).{0,100}(?:min)|(?:min).{0,100}(?:\b(?:8|eight)\b))
+    - live pick|scan|practi|walkthrough|walk.through
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+    regex_none:
+    - \b(?:0\.52|52\s*%).{0,30}(?:orders?\s*(?:per|/)|picks?\s*(?:per|/))
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.

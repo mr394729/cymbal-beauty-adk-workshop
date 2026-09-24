@@ -1,0 +1,92 @@
+[
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Catalog id, e.g. P-0101"
+  },
+  {
+    "name": "brand",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Fictional brand"
+  },
+  {
+    "name": "name",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "category",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "skincare|haircare|bath|fragrance|makeup"
+  },
+  {
+    "name": "subcategory",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "price_usd",
+    "type": "FLOAT64",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "is_fragrance_free",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "is_clean",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": "Clean-beauty flag"
+  },
+  {
+    "name": "locked_case",
+    "type": "BOOL",
+    "mode": "REQUIRED",
+    "description": "Kept in a locked fixture (high-value fragrance)"
+  },
+  {
+    "name": "skin_types",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Comma-separated: dry,oily,combination,sensitive,normal"
+  },
+  {
+    "name": "hair_types",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Comma-separated: straight,wavy,curly,coily"
+  },
+  {
+    "name": "key_ingredients",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Comma-separated"
+  },
+  {
+    "name": "description",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "rating_avg",
+    "type": "FLOAT64",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "rating_count",
+    "type": "INT64",
+    "mode": "NULLABLE",
+    "description": ""
+  }
+]

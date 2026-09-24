@@ -1,0 +1,12 @@
+{
+  "store_id": "S-014",
+  "store_group": "Chicagoland",
+  "week": "2026-W40",
+  "source": "the approved promotion plan for the week, as the merchandising system returns it (production: the promotions table)",
+  "promotions": [
+    {"product_id": "P-0101", "product_name": "Lumière Hydra Cream", "promo_price_usd": 22.99, "start_date": "2026-10-04", "end_date": "2026-10-10"},
+    {"product_id": "P-0420", "product_name": "Noir Velvet Eau de Parfum", "promo_price_usd": 79.00, "start_date": "2026-10-04", "end_date": "2026-10-10"},
+    {"product_id": "P-0141", "product_name": "Hydra Moisturizer", "promo_price_usd": 9.99, "start_date": "2026-10-04", "end_date": "2026-10-10"},
+    {"product_id": "P-0231", "product_name": "Lift Hair Mask", "promo_price_usd": 11.00, "start_date": "2026-10-04", "end_date": "2026-10-10"}
+  ]
+}

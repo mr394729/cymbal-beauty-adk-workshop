@@ -1,0 +1,37 @@
+[
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "business_date",
+    "type": "DATE",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "units_sold",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "gross_sales_cents",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "discount_cents",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "net_sales_cents",
+    "type": "INT64",
+    "mode": "REQUIRED"
+  }
+]

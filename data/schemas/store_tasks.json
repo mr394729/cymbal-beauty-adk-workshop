@@ -1,0 +1,74 @@
+[
+  {
+    "name": "task_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "T-00042 (generated) or T-<8 hex> (created by the agent)"
+  },
+  {
+    "name": "store_id",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "task_type",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "backroom_check|replenish|cycle_count|coverage_move|investigation|coaching|planogram_fix|signage_fix"
+  },
+  {
+    "name": "product_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "assignee_id",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "status",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "open|done|cancelled"
+  },
+  {
+    "name": "source",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "agent|manager|system"
+  },
+  {
+    "name": "created_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "due_at",
+    "type": "TIMESTAMP",
+    "mode": "REQUIRED",
+    "description": ""
+  },
+  {
+    "name": "note",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": ""
+  },
+  {
+    "name": "task_key",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Idempotency key of the create call: a hash of store, type, product, assignee and note"
+  },
+  {
+    "name": "delegation_key",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Idempotency key of the last delegate call"
+  }
+]

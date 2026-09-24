@@ -1,0 +1,13 @@
+# Build the standalone chat UI and push it to Artifact Registry.
+#   gcloud builds submit --config cloudbuild/frontend.yaml --substitutions=_IMAGE=<image> .
+# deployment/deploy_frontend.sh runs this, then deploys the image to Cloud Run. The image talks to a deployed
+# Agent Runtime engine and holds no data credentials of its own.
+substitutions:
+  _IMAGE: ""        # required: the full Artifact Registry image, e.g. us-central1-docker.pkg.dev/<p>/<repo>/<name>:<tag>
+options:
+  logging: CLOUD_LOGGING_ONLY
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: build
+    args: ["build", "-f", "frontend/Dockerfile", "-t", "${_IMAGE}", "."]
+images: ["${_IMAGE}"]

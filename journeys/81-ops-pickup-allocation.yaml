@@ -1,0 +1,108 @@
+id: ops-pickup-allocation
+title: Use locations and protect pickup quantities
+persona: dana-store-manager
+goal: Turn a shelf exception into a grounded allocation, then handle a reported discrepancy without inventing
+  a stock write.
+tags:
+- operations-review
+- operations-followup
+- manager
+- inventory
+writes: false
+notes: Run against an unchanged generated operations dataset. Assertions describe source records, not a reset
+  of the live demo. Follow-ups may reuse fresh evidence without repeating a tool call.
+turns:
+- say: Where should Priya pick the Lumière Hydra Cream, and how much should stay for pickups?
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - B[- ]?2\b
+    - (?:(?:\b(?:4|four)\b).{0,100}(?:pickups?|BOPIS|units?|orders?|hold|set aside|reserv|allocat)|(?:pickups?|BOPIS|units?|orders?|hold|set
+      aside|reserv|allocat).{0,100}(?:\b(?:4|four)\b))
+    - (?:(?:\b(?:3|three)\b).{0,100}(?:shel(?:f|ves)|display|replenish|remaining|left)|(?:shel(?:f|ves)|display|replenish|remaining|left).{0,100}(?:\b(?:3|three)\b))
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+- say: So can all seven go onto the display? Explain the split, but do not create a task.
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - (?:(?:\b(?:4|four)\b).{0,100}(?:pickups?|BOPIS|orders?|hold|reserv|allocat)|(?:pickups?|BOPIS|orders?|hold|reserv|allocat).{0,100}(?:\b(?:4|four)\b))
+    - (?:(?:\b(?:3|three)\b).{0,100}(?:display|shel(?:f|ves)|remaining|left|fixture|sales floor|available)|(?:display|shel(?:f|ves)|remaining|left|fixture|sales floor|available).{0,100}(?:\b(?:3|three)\b))
+    - not|no\b|keep|hold|reserv|first|only
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+- say: Priya says the bay is empty. What should we do now? Do not change any records yet.
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - count|mismatch|discrepan|verify|verification|reconcil|physical check|confirm|adjust
+    - pickups?|BOPIS|orders?
+    - location|scan|bay|stock
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014
+- say: Does the empty-bay report mean the system stock has already been changed to zero?
+  expect:
+    no_tool_errors: true
+    not_contains:
+    - not an official procedure
+    - the tool recommends
+    max_latency_s: 75
+    tools_none:
+    - create_store_task
+    - delegate_task
+    - complete_my_task
+    - report_my_task_blocker
+    confirmation: forbidden
+    regex_all:
+    - \A\s*\S+(?:\s+\S+){0,179}\s*\Z
+    - \A(?!.*\b20\d{2}-\d{2}-\d{2}T\d{2}:)(?!.*\b20\d{2}-W\d{2}\b).+\Z
+    - \b7\b|\bseven\b
+    - record|system
+    - not|no\b|unchanged|hasn.t
+    - verify|verification|mismatch|discrepan|count|report
+    state_has:
+      user:role: store_manager
+      user:user_id: U-M014
+      user:store_id: S-014

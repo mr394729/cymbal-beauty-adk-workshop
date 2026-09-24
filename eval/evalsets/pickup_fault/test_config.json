@@ -1,0 +1,20 @@
+{
+  "criteria": {
+    "pickup_counts_invariant": 1.0,
+    "final_response_match_v2": {
+      "threshold": 0.7,
+      "judge_model_options": {
+        "judge_model": "gemini-3.8-flash",
+        "num_samples": 3
+      }
+    }
+  },
+  "custom_metrics": {
+    "pickup_counts_invariant": {
+      "description": "Matched scoped source evidence must establish the fixture pending order and unit totals via any supported native or composable read; semantic judge checks the answer.",
+      "code_config": {
+        "name": "eval.pickup_fault.pickup_counts_invariant"
+      }
+    }
+  }
+}
